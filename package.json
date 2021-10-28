@@ -71,7 +71,7 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.0",
     "@tsconfig/node12": "^1.0.9",
-    "@types/node": "12.20.25",
+    "@types/node": "16.11.6",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "ava": "^3.15.0",
