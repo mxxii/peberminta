@@ -16,15 +16,15 @@ type ObjectMember = { name: string; value: JsonValue; };
 // Lexer / tokenizer
 
 const lex = createLexer([
-  { name: '{', str: '{' },
-  { name: '}', str: '}' },
-  { name: '[', str: '[' },
-  { name: ']', str: ']' },
-  { name: ',', str: ',' },
-  { name: ':', str: ':' },
-  { name: 'null', str: 'null' },
-  { name: 'true', str: 'true' },
-  { name: 'false', str: 'false' },
+  { name: '{' },
+  { name: '}' },
+  { name: '[' },
+  { name: ']' },
+  { name: ',' },
+  { name: ':' },
+  { name: 'null' },
+  { name: 'true' },
+  { name: 'false' },
   {
     name: 'space',
     regex: /\s+/,

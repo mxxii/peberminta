@@ -62,16 +62,16 @@ const multipliers: Record<string, number> = {
 // Lexer / tokenizer
 
 const lex = createLexer([
-  { name: '(', str: '(' },
-  { name: ')', str: ')' },
-  { name: ',', str: ',' },
-  { name: '^', str: '^' },
-  { name: '!', str: '!' },
-  { name: '-', str: '-' },
-  { name: '+', str: '+' },
-  { name: '*', str: '*' },
-  { name: '/', str: '/' },
-  { name: '%', str: '%' },
+  { name: '(' },
+  { name: ')' },
+  { name: ',' },
+  { name: '^' },
+  { name: '!' },
+  { name: '-' },
+  { name: '+' },
+  { name: '*' },
+  { name: '/' },
+  { name: '%' },
   {
     name: 'space',
     regex: /\s+/,
