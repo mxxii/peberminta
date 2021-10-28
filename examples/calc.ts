@@ -8,7 +8,7 @@
 // Good calculator might need a BigNumber support.
 // This is just an example and such detail is irrelevant from the parsing side.
 
-// On the other hand, challenging grammar is relevant to the exaple.
+// On the other hand, challenging grammar is relevant to the example.
 // In addition to unit prefixes this calculator also supports:
 // - math constants;
 // - functions of 1 or 2 arguments;

@@ -1,4 +1,7 @@
 
+// Parser for hexadecimal color codes - like CSS colors,
+// except there are few more options.
+
 import * as p from '../src/core';
 import * as pc from '../src/char';
 
