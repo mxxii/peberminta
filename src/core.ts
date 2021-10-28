@@ -4,9 +4,14 @@
  * It contains type aliases and generic parsers
  * (not bound to a particular token type).
  *
- * Import as:
+ * Node:
  * ```ts
  * import * as p from 'peberminta';
+ * ```
+ *
+ * Deno:
+ * ```ts
+ * import * as p from 'https://deno.land/x/peberminta@.../core.ts';
  * ```
  *
  * @module

@@ -49,6 +49,13 @@ import * as p from 'peberminta';
 import * as pc from 'peberminta/char';
 ```
 
+### Deno
+
+```ts
+import * as p from 'https://deno.land/x/peberminta@.../core.ts';
+import * as pc from 'https://deno.land/x/peberminta@.../char.ts';
+```
+
 
 ## Examples
 

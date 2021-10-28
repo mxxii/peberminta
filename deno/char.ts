@@ -7,9 +7,14 @@
  * It should work even if you have a custom way to split
  * a string into symbols such as graphemes.
  *
- * Import as:
+ * Node:
  * ```ts
  * import * as pc from 'peberminta/char';
+ * ```
+ *
+ * Deno:
+ * ```ts
+ * import * as p from 'https://deno.land/x/peberminta@.../char.ts';
  * ```
  *
  * @module
