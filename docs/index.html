@@ -2,7 +2,11 @@
 <a href="#peberminta" id="peberminta" style="color: inherit; text-decoration: none;">
   <h1>peberminta</h1>
 </a>
-<p><a href="https://github.com/mxxii/peberminta/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a></p>
+<p><img src="https://github.com/mxxii/peberminta/workflows/lint/badge.svg" alt="lint status badge">
+<img src="https://github.com/mxxii/peberminta/workflows/test/badge.svg" alt="test status badge">
+<a href="https://github.com/mxxii/peberminta/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
+<a href="https://www.npmjs.com/package/peberminta"><img src="https://img.shields.io/npm/v/peberminta?logo=npm" alt="npm"></a>
+<a href="https://deno.land/x/peberminta"><img src="https://img.shields.io/badge/deno.land%2Fx%2F-peberminta-informational?logo=deno" alt="deno"></a></p>
 <p>Simple, transparent parser combinators toolkit that supports tokens of any type.</p>
 <p>For when you wanna do weird things with parsers.</p>
 
@@ -37,7 +41,13 @@
 <a href="#install" id="install" style="color: inherit; text-decoration: none;">
   <h2>Install</h2>
 </a>
+
+<a href="#node" id="node" style="color: inherit; text-decoration: none;">
+  <h3>Node</h3>
+</a>
 <pre><code class="language-shell"><span class="hl-0">&gt; npm i peberminta</span>
+</code></pre>
+<pre><code class="language-ts"><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-2">*</span><span class="hl-0"> </span><span class="hl-1">as</span><span class="hl-0"> </span><span class="hl-3">p</span><span class="hl-0"> </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-4">&#39;peberminta&#39;</span><span class="hl-0">;</span><br/><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-2">*</span><span class="hl-0"> </span><span class="hl-1">as</span><span class="hl-0"> </span><span class="hl-3">pc</span><span class="hl-0"> </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-4">&#39;peberminta/char&#39;</span><span class="hl-0">;</span>
 </code></pre>
 
 <a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
@@ -58,15 +68,15 @@
 </a>
 <p>Detailed API documentation with navigation and search:</p>
 <ul>
-<li><a href="core.html">core module</a>; <!-- TODO: links --></li>
-<li><a href="char.html">char module</a>.</li>
+<li><a href="https://mxxii.github.io/peberminta/modules/core.html">core module</a>;</li>
+<li><a href="https://mxxii.github.io/peberminta/modules/char.html">char module</a>.</li>
 </ul>
 
 <a href="#convention" id="convention" style="color: inherit; text-decoration: none;">
   <h3>Convention</h3>
 </a>
 <p>Whole package is built around these type aliases:</p>
-<pre><code class="language-typescript"><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Data</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">&gt; = {</span><br/><span class="hl-0">  </span><span class="hl-4">tokens</span><span class="hl-0">: </span><span class="hl-3">TToken</span><span class="hl-0">[],</span><br/><span class="hl-0">  </span><span class="hl-4">options</span><span class="hl-0">: </span><span class="hl-3">TOptions</span><br/><span class="hl-0">};</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Parser</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">,</span><span class="hl-3">TValue</span><span class="hl-0">&gt; =</span><br/><span class="hl-0">  (</span><span class="hl-4">data</span><span class="hl-0">: </span><span class="hl-3">Data</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">&gt;, </span><span class="hl-4">i</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">) </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-3">Result</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt;;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Matcher</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">,</span><span class="hl-3">TValue</span><span class="hl-0">&gt; =</span><br/><span class="hl-0">  (</span><span class="hl-4">data</span><span class="hl-0">: </span><span class="hl-3">Data</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">&gt;, </span><span class="hl-4">i</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">) </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-3">Match</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt;;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Result</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt; = </span><span class="hl-3">Match</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt; | </span><span class="hl-3">NonMatch</span><span class="hl-0">;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Match</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt; = {</span><br/><span class="hl-0">  </span><span class="hl-4">matched</span><span class="hl-0">: </span><span class="hl-3">true</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">position</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">value</span><span class="hl-0">: </span><span class="hl-3">TValue</span><br/><span class="hl-0">};</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">NonMatch</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-4">matched</span><span class="hl-0">: </span><span class="hl-3">false</span><br/><span class="hl-0">};</span>
+<pre><code class="language-typescript"><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-5">Data</span><span class="hl-0">&lt;</span><span class="hl-5">TToken</span><span class="hl-0">,</span><span class="hl-5">TOptions</span><span class="hl-0">&gt; = {</span><br/><span class="hl-0">  </span><span class="hl-3">tokens</span><span class="hl-0">: </span><span class="hl-5">TToken</span><span class="hl-0">[],</span><br/><span class="hl-0">  </span><span class="hl-3">options</span><span class="hl-0">: </span><span class="hl-5">TOptions</span><br/><span class="hl-0">};</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-5">Parser</span><span class="hl-0">&lt;</span><span class="hl-5">TToken</span><span class="hl-0">,</span><span class="hl-5">TOptions</span><span class="hl-0">,</span><span class="hl-5">TValue</span><span class="hl-0">&gt; =</span><br/><span class="hl-0">  (</span><span class="hl-3">data</span><span class="hl-0">: </span><span class="hl-5">Data</span><span class="hl-0">&lt;</span><span class="hl-5">TToken</span><span class="hl-0">,</span><span class="hl-5">TOptions</span><span class="hl-0">&gt;, </span><span class="hl-3">i</span><span class="hl-0">: </span><span class="hl-5">number</span><span class="hl-0">) </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-5">Result</span><span class="hl-0">&lt;</span><span class="hl-5">TValue</span><span class="hl-0">&gt;;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-5">Matcher</span><span class="hl-0">&lt;</span><span class="hl-5">TToken</span><span class="hl-0">,</span><span class="hl-5">TOptions</span><span class="hl-0">,</span><span class="hl-5">TValue</span><span class="hl-0">&gt; =</span><br/><span class="hl-0">  (</span><span class="hl-3">data</span><span class="hl-0">: </span><span class="hl-5">Data</span><span class="hl-0">&lt;</span><span class="hl-5">TToken</span><span class="hl-0">,</span><span class="hl-5">TOptions</span><span class="hl-0">&gt;, </span><span class="hl-3">i</span><span class="hl-0">: </span><span class="hl-5">number</span><span class="hl-0">) </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-5">Match</span><span class="hl-0">&lt;</span><span class="hl-5">TValue</span><span class="hl-0">&gt;;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-5">Result</span><span class="hl-0">&lt;</span><span class="hl-5">TValue</span><span class="hl-0">&gt; = </span><span class="hl-5">Match</span><span class="hl-0">&lt;</span><span class="hl-5">TValue</span><span class="hl-0">&gt; | </span><span class="hl-5">NonMatch</span><span class="hl-0">;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-5">Match</span><span class="hl-0">&lt;</span><span class="hl-5">TValue</span><span class="hl-0">&gt; = {</span><br/><span class="hl-0">  </span><span class="hl-3">matched</span><span class="hl-0">: </span><span class="hl-5">true</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">position</span><span class="hl-0">: </span><span class="hl-5">number</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-3">value</span><span class="hl-0">: </span><span class="hl-5">TValue</span><br/><span class="hl-0">};</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-5">NonMatch</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-3">matched</span><span class="hl-0">: </span><span class="hl-5">false</span><br/><span class="hl-0">};</span>
 </code></pre>
 <ul>
 <li><p><strong>Data</strong> object holds tokens array and possibly an options object - it&#39;s just a container for all static data used by a parser. Parser position, on the other hand, has it&#39;s own life cycle and passed around separately.</p>
@@ -106,86 +116,86 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="core.html#ab">ab</a></td>
-<td><a href="core.html#abc">abc</a></td>
-<td><a href="core.html#action">action</a></td>
-<td><a href="core.html#ahead">ahead</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#ab">ab</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#abc">abc</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#action">action</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#ahead">ahead</a></td>
 </tr>
 <tr>
-<td><a href="core.html#all">all</a></td>
-<td><em><a href="core.html#and">and</a></em></td>
-<td><a href="core.html#any">any</a></td>
-<td><a href="core.html#chain">chain</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#all">all</a></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/core.html#and">and</a></em></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#any">any</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#chain">chain</a></td>
 </tr>
 <tr>
-<td><a href="core.html#chainReduce">chainReduce</a></td>
-<td><a href="core.html#choice">choice</a></td>
-<td><a href="core.html#condition">condition</a></td>
-<td><a href="core.html#decide">decide</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#chainReduce">chainReduce</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#choice">choice</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#condition">condition</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#decide">decide</a></td>
 </tr>
 <tr>
-<td><em><a href="core.html#discard">discard</a></em></td>
-<td><a href="core.html#emit">emit</a></td>
-<td><a href="core.html#end">end</a></td>
-<td><em><a href="core.html#eof">eof</a></em></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/core.html#discard">discard</a></em></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#emit">emit</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#end">end</a></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/core.html#eof">eof</a></em></td>
 </tr>
 <tr>
-<td><a href="core.html#error">error</a></td>
-<td><a href="core.html#fail">fail</a></td>
-<td><a href="core.html#flatten">flatten</a></td>
-<td><a href="core.html#flatten1">flatten1</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#error">error</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#fail">fail</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#flatten">flatten</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#flatten1">flatten1</a></td>
 </tr>
 <tr>
-<td><a href="core.html#left">left</a></td>
-<td><a href="core.html#leftAssoc1">leftAssoc1</a></td>
-<td><a href="core.html#leftAssoc2">leftAssoc2</a></td>
-<td><a href="core.html#longest">longest</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#left">left</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#leftAssoc1">leftAssoc1</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#leftAssoc2">leftAssoc2</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#longest">longest</a></td>
 </tr>
 <tr>
-<td><em><a href="core.html#lookAhead">lookAhead</a></em></td>
-<td><a href="core.html#make">make</a></td>
-<td><a href="core.html#many">many</a></td>
-<td><a href="core.html#many1">many1</a></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/core.html#lookAhead">lookAhead</a></em></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#make">make</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#many">many</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#many1">many1</a></td>
 </tr>
 <tr>
-<td><a href="core.html#map">map</a></td>
-<td><a href="core.html#map1">map1</a></td>
-<td><a href="core.html#middle">middle</a></td>
-<td><a href="core.html#not">not</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#map">map</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#map1">map1</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#middle">middle</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#not">not</a></td>
 </tr>
 <tr>
-<td><em><a href="core.html#of">of</a></em></td>
-<td><a href="core.html#option">option</a></td>
-<td><em><a href="core.html#or">or</a></em></td>
-<td><a href="core.html#otherwise">otherwise</a></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/core.html#of">of</a></em></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#option">option</a></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/core.html#or">or</a></em></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#otherwise">otherwise</a></td>
 </tr>
 <tr>
-<td><a href="core.html#peek">peek</a></td>
-<td><a href="core.html#recursive">recursive</a></td>
-<td><a href="core.html#reduceLeft">reduceLeft</a></td>
-<td><a href="core.html#reduceRight">reduceRight</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#peek">peek</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#recursive">recursive</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#reduceLeft">reduceLeft</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#reduceRight">reduceRight</a></td>
 </tr>
 <tr>
-<td><a href="core.html#right">right</a></td>
-<td><a href="core.html#rightAssoc1">rightAssoc1</a></td>
-<td><a href="core.html#rightAssoc2">rightAssoc2</a></td>
-<td><a href="core.html#satisfy">satisfy</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#right">right</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#rightAssoc1">rightAssoc1</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#rightAssoc2">rightAssoc2</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#satisfy">satisfy</a></td>
 </tr>
 <tr>
-<td><a href="core.html#sepBy">sepBy</a></td>
-<td><a href="core.html#sepBy1">sepBy1</a></td>
-<td><a href="core.html#skip">skip</a></td>
-<td><em><a href="core.html#some">some</a></em></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#sepBy">sepBy</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#sepBy1">sepBy1</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#skip">skip</a></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/core.html#some">some</a></em></td>
 </tr>
 <tr>
-<td><a href="core.html#start">start</a></td>
-<td><a href="core.html#takeUntil">takeUntil</a></td>
-<td><a href="core.html#takeUntilP">takeUntilP</a></td>
-<td><a href="core.html#takeWhile">takeWhile</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#start">start</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#takeUntil">takeUntil</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#takeUntilP">takeUntilP</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#takeWhile">takeWhile</a></td>
 </tr>
 <tr>
-<td><a href="core.html#takeWhileP">takeWhileP</a></td>
-<td><a href="core.html#token">token</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#takeWhileP">takeWhileP</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#token">token</a></td>
 <td></td>
 <td></td>
 </tr>
@@ -208,13 +218,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="core.html#match">match</a></td>
-<td><a href="core.html#parse">parse</a></td>
-<td><a href="core.html#parserPosition">parserPosition</a></td>
-<td><a href="core.html#remainingTokensNumber">remainingTokensNumber</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#match">match</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#parse">parse</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#parserPosition">parserPosition</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/core.html#remainingTokensNumber">remainingTokensNumber</a></td>
 </tr>
 <tr>
-<td><a href="char.html#tryParse">tryParse</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#tryParse">tryParse</a></td>
 <td></td>
 <td></td>
 <td></td>
@@ -238,15 +248,15 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><em><a href="char.html#anyOf">anyOf</a></em></td>
-<td><a href="char.html#char">char</a></td>
-<td><a href="char.html#charTest">charTest</a></td>
-<td><a href="char.html#concat">concat</a></td>
+<td><em><a href="https://mxxii.github.io/peberminta/modules/char.html#anyOf">anyOf</a></em></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#char">char</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#charTest">charTest</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#concat">concat</a></td>
 </tr>
 <tr>
-<td><a href="char.html#noneOf">noneOf</a></td>
-<td><a href="char.html#oneOf">oneOf</a></td>
-<td><a href="char.html#str">str</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#noneOf">noneOf</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#oneOf">oneOf</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#str">str</a></td>
 <td></td>
 </tr>
 </tbody></table>
@@ -268,10 +278,10 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><a href="char.html#match">match</a></td>
-<td><a href="char.html#parse">parse</a></td>
-<td><a href="char.html#parserPosition">parserPosition</a></td>
-<td><a href="char.html#tryParse">tryParse</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#match">match</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#parse">parse</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#parserPosition">parserPosition</a></td>
+<td><a href="https://mxxii.github.io/peberminta/modules/char.html#tryParse">tryParse</a></td>
 </tr>
 </tbody></table>
 </div>

@@ -1,6 +1,10 @@
 # peberminta
 
+![lint status badge](https://github.com/mxxii/peberminta/workflows/lint/badge.svg)
+![test status badge](https://github.com/mxxii/peberminta/workflows/test/badge.svg)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/mxxii/peberminta/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/peberminta?logo=npm)](https://www.npmjs.com/package/peberminta)
+[![deno](https://img.shields.io/badge/deno.land%2Fx%2F-peberminta-informational?logo=deno)](https://deno.land/x/peberminta)
 
 Simple, transparent parser combinators toolkit that supports tokens of any type.
 
@@ -34,8 +38,15 @@ For when you wanna do weird things with parsers.
 
 ## Install
 
+### Node
+
 ```shell
 > npm i peberminta
+```
+
+```ts
+import * as p from 'peberminta';
+import * as pc from 'peberminta/char';
 ```
 
 
@@ -54,8 +65,8 @@ For when you wanna do weird things with parsers.
 
 Detailed API documentation with navigation and search:
 
-- [core module](core.html); <!-- TODO: links -->
-- [char module](char.html).
+- [core module](https://mxxii.github.io/peberminta/modules/core.html);
+- [char module](https://mxxii.github.io/peberminta/modules/char.html).
 
 ### Convention
 
@@ -110,20 +121,20 @@ export type NonMatch = {
 
 | <!-- --> | <!-- --> | <!-- --> | <!-- -->
 | -------- | -------- | -------- | --------
-| [ab](core.html#ab) | [abc](core.html#abc) | [action](core.html#action) | [ahead](core.html#ahead)
-| [all](core.html#all) | _[and](core.html#and)_ | [any](core.html#any) | [chain](core.html#chain)
-| [chainReduce](core.html#chainReduce) | [choice](core.html#choice) | [condition](core.html#condition) | [decide](core.html#decide)
-| _[discard](core.html#discard)_ | [emit](core.html#emit) | [end](core.html#end) | _[eof](core.html#eof)_
-| [error](core.html#error) | [fail](core.html#fail) | [flatten](core.html#flatten) | [flatten1](core.html#flatten1)
-| [left](core.html#left) | [leftAssoc1](core.html#leftAssoc1) | [leftAssoc2](core.html#leftAssoc2) | [longest](core.html#longest)
-| _[lookAhead](core.html#lookAhead)_ | [make](core.html#make) | [many](core.html#many) | [many1](core.html#many1)
-| [map](core.html#map) | [map1](core.html#map1) | [middle](core.html#middle) | [not](core.html#not)
-| _[of](core.html#of)_ | [option](core.html#option) | _[or](core.html#or)_ | [otherwise](core.html#otherwise)
-| [peek](core.html#peek) | [recursive](core.html#recursive) | [reduceLeft](core.html#reduceLeft) | [reduceRight](core.html#reduceRight)
-| [right](core.html#right) | [rightAssoc1](core.html#rightAssoc1) | [rightAssoc2](core.html#rightAssoc2) | [satisfy](core.html#satisfy)
-| [sepBy](core.html#sepBy) | [sepBy1](core.html#sepBy1) | [skip](core.html#skip) | _[some](core.html#some)_
-| [start](core.html#start) | [takeUntil](core.html#takeUntil) | [takeUntilP](core.html#takeUntilP) | [takeWhile](core.html#takeWhile)
-| [takeWhileP](core.html#takeWhileP) | [token](core.html#token)
+| [ab](https://mxxii.github.io/peberminta/modules/core.html#ab) | [abc](https://mxxii.github.io/peberminta/modules/core.html#abc) | [action](https://mxxii.github.io/peberminta/modules/core.html#action) | [ahead](https://mxxii.github.io/peberminta/modules/core.html#ahead)
+| [all](https://mxxii.github.io/peberminta/modules/core.html#all) | _[and](https://mxxii.github.io/peberminta/modules/core.html#and)_ | [any](https://mxxii.github.io/peberminta/modules/core.html#any) | [chain](https://mxxii.github.io/peberminta/modules/core.html#chain)
+| [chainReduce](https://mxxii.github.io/peberminta/modules/core.html#chainReduce) | [choice](https://mxxii.github.io/peberminta/modules/core.html#choice) | [condition](https://mxxii.github.io/peberminta/modules/core.html#condition) | [decide](https://mxxii.github.io/peberminta/modules/core.html#decide)
+| _[discard](https://mxxii.github.io/peberminta/modules/core.html#discard)_ | [emit](https://mxxii.github.io/peberminta/modules/core.html#emit) | [end](https://mxxii.github.io/peberminta/modules/core.html#end) | _[eof](https://mxxii.github.io/peberminta/modules/core.html#eof)_
+| [error](https://mxxii.github.io/peberminta/modules/core.html#error) | [fail](https://mxxii.github.io/peberminta/modules/core.html#fail) | [flatten](https://mxxii.github.io/peberminta/modules/core.html#flatten) | [flatten1](https://mxxii.github.io/peberminta/modules/core.html#flatten1)
+| [left](https://mxxii.github.io/peberminta/modules/core.html#left) | [leftAssoc1](https://mxxii.github.io/peberminta/modules/core.html#leftAssoc1) | [leftAssoc2](https://mxxii.github.io/peberminta/modules/core.html#leftAssoc2) | [longest](https://mxxii.github.io/peberminta/modules/core.html#longest)
+| _[lookAhead](https://mxxii.github.io/peberminta/modules/core.html#lookAhead)_ | [make](https://mxxii.github.io/peberminta/modules/core.html#make) | [many](https://mxxii.github.io/peberminta/modules/core.html#many) | [many1](https://mxxii.github.io/peberminta/modules/core.html#many1)
+| [map](https://mxxii.github.io/peberminta/modules/core.html#map) | [map1](https://mxxii.github.io/peberminta/modules/core.html#map1) | [middle](https://mxxii.github.io/peberminta/modules/core.html#middle) | [not](https://mxxii.github.io/peberminta/modules/core.html#not)
+| _[of](https://mxxii.github.io/peberminta/modules/core.html#of)_ | [option](https://mxxii.github.io/peberminta/modules/core.html#option) | _[or](https://mxxii.github.io/peberminta/modules/core.html#or)_ | [otherwise](https://mxxii.github.io/peberminta/modules/core.html#otherwise)
+| [peek](https://mxxii.github.io/peberminta/modules/core.html#peek) | [recursive](https://mxxii.github.io/peberminta/modules/core.html#recursive) | [reduceLeft](https://mxxii.github.io/peberminta/modules/core.html#reduceLeft) | [reduceRight](https://mxxii.github.io/peberminta/modules/core.html#reduceRight)
+| [right](https://mxxii.github.io/peberminta/modules/core.html#right) | [rightAssoc1](https://mxxii.github.io/peberminta/modules/core.html#rightAssoc1) | [rightAssoc2](https://mxxii.github.io/peberminta/modules/core.html#rightAssoc2) | [satisfy](https://mxxii.github.io/peberminta/modules/core.html#satisfy)
+| [sepBy](https://mxxii.github.io/peberminta/modules/core.html#sepBy) | [sepBy1](https://mxxii.github.io/peberminta/modules/core.html#sepBy1) | [skip](https://mxxii.github.io/peberminta/modules/core.html#skip) | _[some](https://mxxii.github.io/peberminta/modules/core.html#some)_
+| [start](https://mxxii.github.io/peberminta/modules/core.html#start) | [takeUntil](https://mxxii.github.io/peberminta/modules/core.html#takeUntil) | [takeUntilP](https://mxxii.github.io/peberminta/modules/core.html#takeUntilP) | [takeWhile](https://mxxii.github.io/peberminta/modules/core.html#takeWhile)
+| [takeWhileP](https://mxxii.github.io/peberminta/modules/core.html#takeWhileP) | [token](https://mxxii.github.io/peberminta/modules/core.html#token)
 
 </div>
 
@@ -133,8 +144,8 @@ export type NonMatch = {
 
 | <!-- --> | <!-- --> | <!-- --> | <!-- -->
 | -------- | -------- | -------- | --------
-| [match](core.html#match) | [parse](core.html#parse) | [parserPosition](core.html#parserPosition) | [remainingTokensNumber](core.html#remainingTokensNumber)
-| [tryParse](char.html#tryParse)
+| [match](https://mxxii.github.io/peberminta/modules/core.html#match) | [parse](https://mxxii.github.io/peberminta/modules/core.html#parse) | [parserPosition](https://mxxii.github.io/peberminta/modules/core.html#parserPosition) | [remainingTokensNumber](https://mxxii.github.io/peberminta/modules/core.html#remainingTokensNumber)
+| [tryParse](https://mxxii.github.io/peberminta/modules/char.html#tryParse)
 
 </div>
 
@@ -144,8 +155,8 @@ export type NonMatch = {
 
 | <!-- --> | <!-- --> | <!-- --> | <!-- -->
 | -------- | -------- | -------- | --------
-| _[anyOf](char.html#anyOf)_ | [char](char.html#char) | [charTest](char.html#charTest) | [concat](char.html#concat)
-| [noneOf](char.html#noneOf) | [oneOf](char.html#oneOf) | [str](char.html#str)
+| _[anyOf](https://mxxii.github.io/peberminta/modules/char.html#anyOf)_ | [char](https://mxxii.github.io/peberminta/modules/char.html#char) | [charTest](https://mxxii.github.io/peberminta/modules/char.html#charTest) | [concat](https://mxxii.github.io/peberminta/modules/char.html#concat)
+| [noneOf](https://mxxii.github.io/peberminta/modules/char.html#noneOf) | [oneOf](https://mxxii.github.io/peberminta/modules/char.html#oneOf) | [str](https://mxxii.github.io/peberminta/modules/char.html#str)
 
 </div>
 
@@ -155,7 +166,7 @@ export type NonMatch = {
 
 | <!-- --> | <!-- --> | <!-- --> | <!-- -->
 | -------- | -------- | -------- | --------
-| [match](char.html#match) | [parse](char.html#parse) | [parserPosition](char.html#parserPosition) | [tryParse](char.html#tryParse)
+| [match](https://mxxii.github.io/peberminta/modules/char.html#match) | [parse](https://mxxii.github.io/peberminta/modules/char.html#parse) | [parserPosition](https://mxxii.github.io/peberminta/modules/char.html#parserPosition) | [tryParse](https://mxxii.github.io/peberminta/modules/char.html#tryParse)
 
 </div>
 
