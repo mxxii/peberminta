@@ -1,0 +1,307 @@
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>peberminta - v0.5.0</title><meta name="description" content="Documentation for peberminta - v0.5.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/custom.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">peberminta - v0.5.0</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> peberminta - v0.5.0</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#peberminta" id="peberminta" style="color: inherit; text-decoration: none;">
+  <h1>peberminta</h1>
+</a>
+<p><a href="https://github.com/mxxii/peberminta/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a></p>
+<p>Simple, transparent parser combinators toolkit that supports tokens of any type.</p>
+<p>For when you wanna do weird things with parsers.</p>
+
+<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+  <h2>Features</h2>
+</a>
+<ul>
+<li><p><strong>Well typed</strong> - written in TypeScript and with a lot of attention to keep types well defined.</p>
+</li>
+<li><p><strong>Highly generic</strong> - no constraints on tokens, options (additional state data) and output types. Core module has not a single mention of strings as a part of normal flow. Some string-specific building blocks can be loaded from a separate module in case you need them.</p>
+</li>
+<li><p><strong>Transparent</strong>. Built on a very simple base idea - just a few type aliases. Whole parser state is accessible at any time.</p>
+</li>
+<li><p><strong>Lightweight</strong>. Zero dependencies. Just type aliases and functions.</p>
+</li>
+<li><p><strong>Batteries included</strong> - comes with a pretty big set of building blocks.</p>
+</li>
+<li><p><strong>Easy to extend</strong> - just follow the convention defined by type aliases when making your own building blocks. <em>(And maybe let me know what you think can be universally useful to be included in the package itself.)</em></p>
+</li>
+<li><p><strong>Easy to make configurable parsers</strong>. Rather than dynamically composing parsers based on options or manually weaving options into a dynamic parser state, this package offers a standard way to treat options as a part of static data and access them at any moment for course correction.</p>
+</li>
+<li><p><strong>Well tested</strong> - comes will tests for everything including examples.</p>
+</li>
+<li><p><strong>Practicality over &quot;purity&quot;</strong>. To be understandable and self-consistent is more important than to follow an established encoding of abstract ideas. More on this below.</p>
+</li>
+<li><p><strong>No streaming</strong> - accepts a fixed array of tokens. It is simple, whole input can be accessed at any time if needed. More on this below.</p>
+</li>
+<li><p><strong>Bring your own lexer/tokenizer</strong> - if you need it. It doesn&#39;t matter how tokens are made - this package can consume anything you can type. I have a lexer as well, called <a href="https://github.com/mxxii/leac">leac</a>, and it is used in some examples, but there is nothing special about it to make it the best match (well, maybe the fact it is written in TypeScript, has equal level of maintenance and is made with arrays instead of iterators in mind as well).</p>
+</li>
+</ul>
+
+<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+  <h2>Install</h2>
+</a>
+<pre><code class="language-shell"><span class="hl-0">&gt; npm i peberminta</span>
+</code></pre>
+
+<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+  <h2>Examples</h2>
+</a>
+<ul>
+<li><a href="https://github.com/mxxii/peberminta/blob/main/examples/json.ts">JSON</a>;</li>
+<li><a href="https://github.com/mxxii/peberminta/blob/main/examples/csv.ts">CSV</a>;</li>
+<li><a href="https://github.com/mxxii/peberminta/blob/main/examples/hexColor.ts">Hex Color</a>;</li>
+<li><a href="https://github.com/mxxii/peberminta/blob/main/examples/calc.ts">Calc</a>;</li>
+<li><a href="https://github.com/mxxii/peberminta/blob/main/examples/bf1.ts">Brainfuck</a> (and <a href="https://github.com/mxxii/peberminta/blob/main/examples/bf2.ts">another implementation</a>);</li>
+<li><a href="https://github.com/mxxii/peberminta/blob/main/examples/nonDec.ts">Non-decreasing sequences</a>;</li>
+<li><em>feel free to PR or request interesting compact grammar examples.</em></li>
+</ul>
+
+<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+  <h2>API</h2>
+</a>
+<p>Detailed API documentation with navigation and search:</p>
+<ul>
+<li><a href="core.html">core module</a>; <!-- TODO: links --></li>
+<li><a href="char.html">char module</a>.</li>
+</ul>
+
+<a href="#convention" id="convention" style="color: inherit; text-decoration: none;">
+  <h3>Convention</h3>
+</a>
+<p>Whole package is built around these type aliases:</p>
+<pre><code class="language-typescript"><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Data</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">&gt; = {</span><br/><span class="hl-0">  </span><span class="hl-4">tokens</span><span class="hl-0">: </span><span class="hl-3">TToken</span><span class="hl-0">[],</span><br/><span class="hl-0">  </span><span class="hl-4">options</span><span class="hl-0">: </span><span class="hl-3">TOptions</span><br/><span class="hl-0">};</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Parser</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">,</span><span class="hl-3">TValue</span><span class="hl-0">&gt; =</span><br/><span class="hl-0">  (</span><span class="hl-4">data</span><span class="hl-0">: </span><span class="hl-3">Data</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">&gt;, </span><span class="hl-4">i</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">) </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-3">Result</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt;;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Matcher</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">,</span><span class="hl-3">TValue</span><span class="hl-0">&gt; =</span><br/><span class="hl-0">  (</span><span class="hl-4">data</span><span class="hl-0">: </span><span class="hl-3">Data</span><span class="hl-0">&lt;</span><span class="hl-3">TToken</span><span class="hl-0">,</span><span class="hl-3">TOptions</span><span class="hl-0">&gt;, </span><span class="hl-4">i</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">) </span><span class="hl-2">=&gt;</span><span class="hl-0"> </span><span class="hl-3">Match</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt;;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Result</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt; = </span><span class="hl-3">Match</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt; | </span><span class="hl-3">NonMatch</span><span class="hl-0">;</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">Match</span><span class="hl-0">&lt;</span><span class="hl-3">TValue</span><span class="hl-0">&gt; = {</span><br/><span class="hl-0">  </span><span class="hl-4">matched</span><span class="hl-0">: </span><span class="hl-3">true</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">position</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-4">value</span><span class="hl-0">: </span><span class="hl-3">TValue</span><br/><span class="hl-0">};</span><br/><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">NonMatch</span><span class="hl-0"> = {</span><br/><span class="hl-0">  </span><span class="hl-4">matched</span><span class="hl-0">: </span><span class="hl-3">false</span><br/><span class="hl-0">};</span>
+</code></pre>
+<ul>
+<li><p><strong>Data</strong> object holds tokens array and possibly an options object - it&#39;s just a container for all static data used by a parser. Parser position, on the other hand, has it&#39;s own life cycle and passed around separately.</p>
+</li>
+<li><p>A <strong>Parser</strong> is a function that accepts Data object and a parser position, looks into the tokens array at the given position and returns either a Match with a parsed value (use <code>null</code> if there is no value) and a new position or a NonMatch.</p>
+</li>
+<li><p>A <strong>Matcher</strong> is a special case of Parser that never fails and always returns a Match.</p>
+</li>
+<li><p><strong>Result</strong> object from a Parser can be either a Match or a NonMatch.</p>
+</li>
+<li><p><strong>Match</strong> is a result of successful parsing - it contains a parsed value and a new parser position.</p>
+</li>
+<li><p><strong>NonMatch</strong> is a result of unsuccessful parsing. It doesn&#39;t have any data attached to it.</p>
+</li>
+<li><p><strong>TToken</strong> can be any type.</p>
+</li>
+<li><p><strong>TOptions</strong> can be any type. Use it to make your parser customizable. Or set it as <code>undefined</code> and type as <code>unknown</code> if not needed.</p>
+</li>
+</ul>
+
+<a href="#building-blocks" id="building-blocks" style="color: inherit; text-decoration: none;">
+  <h3>Building blocks</h3>
+</a>
+
+<a href="#core-blocks" id="core-blocks" style="color: inherit; text-decoration: none;">
+  <h4>Core blocks</h4>
+</a>
+<div class="headlessTable">
+
+<table>
+<thead>
+<tr>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="core.html#ab">ab</a></td>
+<td><a href="core.html#abc">abc</a></td>
+<td><a href="core.html#action">action</a></td>
+<td><a href="core.html#ahead">ahead</a></td>
+</tr>
+<tr>
+<td><a href="core.html#all">all</a></td>
+<td><em><a href="core.html#and">and</a></em></td>
+<td><a href="core.html#any">any</a></td>
+<td><a href="core.html#chain">chain</a></td>
+</tr>
+<tr>
+<td><a href="core.html#chainReduce">chainReduce</a></td>
+<td><a href="core.html#choice">choice</a></td>
+<td><a href="core.html#condition">condition</a></td>
+<td><a href="core.html#decide">decide</a></td>
+</tr>
+<tr>
+<td><em><a href="core.html#discard">discard</a></em></td>
+<td><a href="core.html#emit">emit</a></td>
+<td><a href="core.html#end">end</a></td>
+<td><em><a href="core.html#eof">eof</a></em></td>
+</tr>
+<tr>
+<td><a href="core.html#error">error</a></td>
+<td><a href="core.html#fail">fail</a></td>
+<td><a href="core.html#flatten">flatten</a></td>
+<td><a href="core.html#flatten1">flatten1</a></td>
+</tr>
+<tr>
+<td><a href="core.html#left">left</a></td>
+<td><a href="core.html#leftAssoc1">leftAssoc1</a></td>
+<td><a href="core.html#leftAssoc2">leftAssoc2</a></td>
+<td><a href="core.html#longest">longest</a></td>
+</tr>
+<tr>
+<td><em><a href="core.html#lookAhead">lookAhead</a></em></td>
+<td><a href="core.html#make">make</a></td>
+<td><a href="core.html#many">many</a></td>
+<td><a href="core.html#many1">many1</a></td>
+</tr>
+<tr>
+<td><a href="core.html#map">map</a></td>
+<td><a href="core.html#map1">map1</a></td>
+<td><a href="core.html#middle">middle</a></td>
+<td><a href="core.html#not">not</a></td>
+</tr>
+<tr>
+<td><em><a href="core.html#of">of</a></em></td>
+<td><a href="core.html#option">option</a></td>
+<td><em><a href="core.html#or">or</a></em></td>
+<td><a href="core.html#otherwise">otherwise</a></td>
+</tr>
+<tr>
+<td><a href="core.html#peek">peek</a></td>
+<td><a href="core.html#recursive">recursive</a></td>
+<td><a href="core.html#reduceLeft">reduceLeft</a></td>
+<td><a href="core.html#reduceRight">reduceRight</a></td>
+</tr>
+<tr>
+<td><a href="core.html#right">right</a></td>
+<td><a href="core.html#rightAssoc1">rightAssoc1</a></td>
+<td><a href="core.html#rightAssoc2">rightAssoc2</a></td>
+<td><a href="core.html#satisfy">satisfy</a></td>
+</tr>
+<tr>
+<td><a href="core.html#sepBy">sepBy</a></td>
+<td><a href="core.html#sepBy1">sepBy1</a></td>
+<td><a href="core.html#skip">skip</a></td>
+<td><em><a href="core.html#some">some</a></em></td>
+</tr>
+<tr>
+<td><a href="core.html#start">start</a></td>
+<td><a href="core.html#takeUntil">takeUntil</a></td>
+<td><a href="core.html#takeUntilP">takeUntilP</a></td>
+<td><a href="core.html#takeWhile">takeWhile</a></td>
+</tr>
+<tr>
+<td><a href="core.html#takeWhileP">takeWhileP</a></td>
+<td><a href="core.html#token">token</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</div>
+
+
+<a href="#core-utilities" id="core-utilities" style="color: inherit; text-decoration: none;">
+  <h4>Core utilities</h4>
+</a>
+<div class="headlessTable">
+
+<table>
+<thead>
+<tr>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="core.html#match">match</a></td>
+<td><a href="core.html#parse">parse</a></td>
+<td><a href="core.html#parserPosition">parserPosition</a></td>
+<td><a href="core.html#remainingTokensNumber">remainingTokensNumber</a></td>
+</tr>
+<tr>
+<td><a href="char.html#tryParse">tryParse</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</div>
+
+
+<a href="#char-blocks" id="char-blocks" style="color: inherit; text-decoration: none;">
+  <h4>Char blocks</h4>
+</a>
+<div class="headlessTable">
+
+<table>
+<thead>
+<tr>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em><a href="char.html#anyOf">anyOf</a></em></td>
+<td><a href="char.html#char">char</a></td>
+<td><a href="char.html#charTest">charTest</a></td>
+<td><a href="char.html#concat">concat</a></td>
+</tr>
+<tr>
+<td><a href="char.html#noneOf">noneOf</a></td>
+<td><a href="char.html#oneOf">oneOf</a></td>
+<td><a href="char.html#str">str</a></td>
+<td></td>
+</tr>
+</tbody></table>
+</div>
+
+
+<a href="#char-utilities" id="char-utilities" style="color: inherit; text-decoration: none;">
+  <h4>Char utilities</h4>
+</a>
+<div class="headlessTable">
+
+<table>
+<thead>
+<tr>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+<th><!-- --></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="char.html#match">match</a></td>
+<td><a href="char.html#parse">parse</a></td>
+<td><a href="char.html#parserPosition">parserPosition</a></td>
+<td><a href="char.html#tryParse">tryParse</a></td>
+</tr>
+</tbody></table>
+</div>
+
+
+
+<a href="#what-about-" id="what-about-" style="color: inherit; text-decoration: none;">
+  <h2>What about ...?</h2>
+</a>
+<ul>
+<li><p>performance - The code is very simple but I won&#39;t put any unverified assumptions here. I&#39;d be grateful to anyone who can set up a good benchmark project to compare different parser combinators.</p>
+</li>
+<li><p>stable release - Current release is well thought out and tested. I leave a chance that some supplied functions may need an incompatible change. Before version 1.0.0 this will be done without a deprecation cycle.</p>
+</li>
+<li><p>streams/iterators - Maybe some day, if the need to parse a stream of non-string data arise. For now I don&#39;t have a task that would force me to think well on how to design it. It would require a significant trade off and may end up being a separate module (like <code>char</code>) at best or even a separate package.</p>
+</li>
+<li><p>Fantasy Land - You can find some familiar ideas here, especially when compared to Static Land. But I&#39;m not concerned about compatibility with that spec - see &quot;Practicality over &quot;purity&quot;&quot; entry above. What I think might make sense is to add separate tests for laws applicable in context of this package. Low priority though.</p>
+</li>
+</ul>
+
+<a href="#some-other-parser-combinator-packages" id="some-other-parser-combinator-packages" style="color: inherit; text-decoration: none;">
+  <h2>Some other parser combinator packages</h2>
+</a>
+<ul>
+<li><a href="https://github.com/francisrstokes/arcsecond">arcsecond</a>;</li>
+<li><a href="https://github.com/jneen/parsimmon">parsimmon</a>;</li>
+<li><a href="https://github.com/Chevrotain/chevrotain">chevrotain</a>;</li>
+<li><a href="https://github.com/bwrrp/prsc.js">prsc.js</a>;</li>
+<li><a href="https://github.com/mwilliamson/lop">lop</a>;</li>
+<li><a href="https://www.npmjs.com/package/parser-lang">parser-lang</a>;</li>
+<li><em>and more, with varied level of maintenance.</em></li>
+</ul>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/char.html">char</a></li><li class=" tsd-kind-module"><a href="modules/core.html">core</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li><li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

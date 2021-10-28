@@ -1,0 +1,34 @@
+{
+  "extends": "@tsconfig/node12/tsconfig.json",
+  "include": [
+    "src/**/*.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "./lib"
+  },
+  "typedocOptions": {
+    "categorizeByGroup": false,
+    "categoryOrder": [
+      "Type aliases",
+      "Parsers",
+      "Utility functions"
+    ],
+    "customCss": "./assets/docs.css",
+    "defaultCategory": "Parsers",
+    "disableSources": true,
+    "entryPoints": [
+      "src/core.ts",
+      "src/char.ts"
+    ],
+    "includeVersion": true,
+    "out": "docs",
+    "sort": "alphabetical"
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "ESNext",
+      "esModuleInterop": true,
+      "moduleResolution": "Node"
+    }
+  }
+}
