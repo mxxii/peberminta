@@ -45,6 +45,7 @@
   "files": [
     "lib"
   ],
+  "sideEffects": false,
   "scripts": {
     "build:docs": "typedoc",
     "build:deno": "denoify",
