@@ -207,7 +207,7 @@ const factorialCache = [1, 1];
 function factorial (n: number)
 {
   if (n < 0) {
-    throw new Error(`Trying to take factorial of ${n}, a negavive value!`);
+    throw new Error(`Trying to take factorial of ${n}, a negative value!`);
   }
   if (!Number.isSafeInteger(n)) {
     throw new Error(`Trying to take factorial of ${n}, not a safe integer!`);

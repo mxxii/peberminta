@@ -12,7 +12,7 @@ type FourNumbersFormat = 'rgba' | 'argb' | 'off';
 type HashFormat = 'on' | 'off' | 'either';
 
 type Options = {
-  allowShortNonation: boolean,
+  allowShortNotation: boolean,
   fourNumbersFormat: FourNumbersFormat,
   hashFormat: HashFormat
 };
@@ -103,12 +103,12 @@ const parseColor_ = p.middle(
     (n, data: p.Data<string,Options>) => {
       switch (n) {
         case 3:
-          if (data.options.allowShortNonation) {
+          if (data.options.allowShortNotation) {
             return parseColorNumbers(shortHexNumber_);
           }
           break;
         case 4:
-          if (data.options.allowShortNonation) {
+          if (data.options.allowShortNotation) {
             return parseColorAlphaNumbers(shortHexNumber_);
           }
           break;
@@ -142,7 +142,7 @@ const samples = [
 
 for (const sample of samples) {
   const maybeColor = pc.tryParse(parseColor_, sample, {
-    allowShortNonation: true,
+    allowShortNotation: true,
     fourNumbersFormat: 'rgba',
     hashFormat: 'either'
   });

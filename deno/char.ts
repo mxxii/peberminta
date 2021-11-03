@@ -44,7 +44,7 @@ export function char<TOptions> (
 
 /**
  * Make a parser that matches and returns a character
- * if it is present in a given character samples string.
+ * if it is present in a given character samples string/array.
  *
  * Tokens expected to be individual characters/graphemes.
  *
@@ -60,7 +60,7 @@ export { oneOf as anyOf };
 
 /**
  * Make a parser that matches and returns a character
- * if it is absent in a given character samples string.
+ * if it is absent in a given character samples string/array.
  *
  * Tokens expected to be individual characters/graphemes.
  *
@@ -158,7 +158,7 @@ export function concat<TOptions> (
  *
  * @param data - Data object (tokens and options).
  * @param i - Parser position in the tokens array.
- * @param contextTokens - How many tokens around the current one to render.
+ * @param contextTokens - How many tokens (characters) around the current one to render.
  * @returns A multiline string.
  *
  * @category Utility functions
@@ -205,8 +205,6 @@ export function parserPosition (
  * @param parser - A parser to run.
  * @param str - Input string or an array of graphemes.
  * @param options - Parser options.
- * @param expectMulticharGraphemes - Fallback to line-by-line tokens output
- * (For incomplete match error message.)
  * @returns A matched value.
  *
  * @category Utility functions

@@ -92,7 +92,7 @@ export type Matcher<TToken,TOptions,TValue> =
 
 
 /**
- * Make a {@link Matcher} that always succedes with provided value and doesn't consume input.
+ * Make a {@link Matcher} that always succeeds with provided value and doesn't consume input.
  *
  * Use {@link make} if you want to make a value dynamically.
  *
@@ -111,7 +111,7 @@ export function emit<TToken,TOptions,TValue> (
 export { emit as of };
 
 /**
- * Make a {@link Matcher} that always succedes
+ * Make a {@link Matcher} that always succeeds
  * and makes a value with provided function without consuming input.
  *
  * Use {@link emit} if you want to emit the same value every time.
@@ -137,7 +137,7 @@ export function make<TToken,TOptions,TValue> (
 }
 
 /**
- * Make a {@link Matcher} that always succedes with `null` value,
+ * Make a {@link Matcher} that always succeeds with `null` value,
  * and performs an action / side effect without consuming input.
  *
  * Use {@link emit} or {@link make} if you want to produce a result.
@@ -178,11 +178,13 @@ export function fail<TToken,TOptions> (
 }
 
 /**
- * Make a {@link Matcher} that throws an error when reached.
+ * Make a {@link Matcher} that throws an error if reached.
  *
- * Use this to terminate the parsing when finding any valid match is not possible.
+ * Use with caution!
  *
  * Use {@link fail} if parser can step back and try a different path.
+ *
+ * For error recovery you can try to encode erroneous state in an output value instead.
  *
  * @param message - The message or a function to construct it from the current parser state.
  */
@@ -310,7 +312,7 @@ function mapOuter<TValue1,TValue2> (
  *
  * Use {@link map1} if some matched values can't be mapped.
  *
- * @param p - A base parser.
+ * @param p - A base matcher.
  * @param mapper - A function that modifies the matched value.
  */
 export function map<TToken,TOptions,TValue1,TValue2> (
@@ -872,7 +874,7 @@ export { skip as discard };
  *
  * Implementation is based on {@link all} and {@link flatten1}.
  *
- * @param ps - Parsers sequence.
+ * @param ps - Matchers sequence.
  * Each parser can return a match with a value or an array of values.
  */
 export function flatten<TToken,TOptions,TValue> (
@@ -904,7 +906,7 @@ export function flatten<TToken,TOptions,TValue> (
  *
  * Implementation is based on {@link map}.
  *
- * @param p - A parser.
+ * @param p - A matcher.
  */
 export function flatten1<TToken,TOptions,TValue> (
   p: Matcher<TToken,TOptions,(TValue|TValue[])[]>
@@ -1285,12 +1287,22 @@ export function chain<TToken,TOptions,TValue1,TValue2> (
 }
 
 /**
- * Make a parser that acts like a given one but doesn't consume input.
+ * This overload makes a {@link Matcher} that acts like a given one
+ * but doesn't consume input.
  *
- * Can be useful in combination with {@link chain}.
+ * @param p - A matcher.
+ */
+export function ahead<TToken,TOptions,TValue> (
+  p: Matcher<TToken,TOptions,TValue>
+): Matcher<TToken,TOptions,TValue>;
+/**
+ * Make a parser that acts like a given one but doesn't consume input.
  *
  * @param p - A parser.
  */
+export function ahead<TToken,TOptions,TValue> (
+  p: Parser<TToken,TOptions,TValue>
+): Parser<TToken,TOptions,TValue>;
 export function ahead<TToken,TOptions,TValue> (
   p: Parser<TToken,TOptions,TValue>
 ): Parser<TToken,TOptions,TValue> {
@@ -1314,7 +1326,9 @@ export { ahead as lookAhead };
  * (rather than constants obtained by composition)
  * don't need this.
  *
- * @param f - A function that returns a parser.
+ * This overload is for {@link Matcher}s.
+ *
+ * @param f - A function that returns a matcher.
  * @returns A parser wrapped into a function.
  */
 export function recursive<TToken,TOptions,TValue> (
