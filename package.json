@@ -54,7 +54,7 @@
     "build": "npm run clean && concurrently npm:build:*",
     "checkAll": "npm run lint && npm test",
     "clean": "rimraf lib && rimraf docs && rimraf deno",
-    "cover": "c8 --reporter=lcov --reporter=text-summary ava test/!(examples).ts --timeout=60s",
+    "cover": "c8 --reporter=lcov --reporter=text-summary ava \"test/!(examples).ts\" --timeout=60s",
     "example:bf1": "npm run ts -- ./examples/bf1.ts",
     "example:bf2": "npm run ts -- ./examples/bf2.ts",
     "example:calc": "npm run ts -- ./examples/calc.ts",
