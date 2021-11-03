@@ -2,6 +2,7 @@
 
 ![lint status badge](https://github.com/mxxii/peberminta/workflows/lint/badge.svg)
 ![test status badge](https://github.com/mxxii/peberminta/workflows/test/badge.svg)
+[![codecov](https://codecov.io/gh/mxxii/peberminta/branch/main/graph/badge.svg?token=TYwVNcTQJd)](https://codecov.io/gh/mxxii/peberminta)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/mxxii/peberminta/blob/main/LICENSE)
 [![npm](https://img.shields.io/npm/v/peberminta?logo=npm)](https://www.npmjs.com/package/peberminta)
 [![deno](https://img.shields.io/badge/deno.land%2Fx%2F-peberminta-informational?logo=deno)](https://deno.land/x/peberminta)

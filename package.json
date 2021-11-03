@@ -1,6 +1,6 @@
 {
   "name": "peberminta",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Simple, transparent parser combinators toolkit that supports any tokens",
   "keywords": [
     "parser",
