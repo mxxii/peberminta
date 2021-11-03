@@ -8,6 +8,7 @@
   ],
   "ignorePatterns": [
     ".vscode",
+    "coverage",
     "deno",
     "docs",
     "lib",

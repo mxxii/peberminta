@@ -36,3 +36,17 @@ jobs:
       - run: npm ci
 
       - run: npm test
+
+      - name: Generate coverage report
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x' }}
+        run: npm run cover
+
+      - name: Upload coverage report to Codecov
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x' }}
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/lcov.info
+          flags: unit,${{ matrix.node-version }},${{ matrix.os }}
+          fail_ci_if_error: true
+          verbose: true

@@ -184,6 +184,13 @@ test('parserPosition - on end', t => {
   );
 });
 
+test('parserPosition - before start', t => {
+  t.is(
+    parserPosition(dataHello, -2, 1),
+    '-2\n h...\n^'
+  );
+});
+
 test('parse - match', t => {
   t.deepEqual(
     parse(str('hello'), 'hello', {}),

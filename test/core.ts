@@ -1072,6 +1072,20 @@ test('parserPosition - on end', t => {
   );
 });
 
+test('parserPosition - before start', t => {
+  t.is(
+    parserPosition(data123, -2, (t) => String(t), 1),
+    '-2 >>\n 0   11\n     ...'
+  );
+});
+
+test('parserPosition - after end', t => {
+  t.is(
+    parserPosition(data123, 5, (t) => String(t), 1),
+    '     ...\n 2   33\n 5 >>'
+  );
+});
+
 test('parse - match', t => {
   t.deepEqual(
     parse(many(any), data123.tokens, {}),
