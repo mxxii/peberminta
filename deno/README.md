@@ -28,7 +28,7 @@ For when you wanna do weird things with parsers.
 
 - **Easy to make configurable parsers**. Rather than dynamically composing parsers based on options or manually weaving options into a dynamic parser state, this package offers a standard way to treat options as a part of static data and access them at any moment for course correction.
 
-- **Well tested** - comes will tests for everything including examples.
+- **Well tested** - comes with tests for everything including examples.
 
 - **Practicality over "purity"**. To be understandable and self-consistent is more important than to follow an established encoding of abstract ideas. More on this below.
 
@@ -197,5 +197,5 @@ export type NonMatch = {
 - [chevrotain](https://github.com/Chevrotain/chevrotain);
 - [prsc.js](https://github.com/bwrrp/prsc.js);
 - [lop](https://github.com/mwilliamson/lop);
-- [parser-lang](https://www.npmjs.com/package/parser-lang);
+- [parser-lang](https://github.com/disnet/parser-lang);
 - *and more, with varied level of maintenance.*
