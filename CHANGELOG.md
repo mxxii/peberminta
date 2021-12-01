@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.5.2
+
+- `peek` function keeps Parser/Matcher distinction;
+
 ## Version 0.5.1
 
 - documentation updates;
