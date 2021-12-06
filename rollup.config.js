@@ -8,8 +8,8 @@ export default [
     input: 'src/core.ts',
     plugins: [typescript(), terser()],
     output: [
-      { file: pkg.exports['.'].import, format: 'es' },
-      { file: pkg.exports['.'].require, format: 'cjs' },
+      { file: pkg.exports['.'].import, format: 'es', sourcemap: true },
+      { file: pkg.exports['.'].require, format: 'cjs', sourcemap: true },
     ],
   },
   {
@@ -17,8 +17,8 @@ export default [
     input: 'src/char.ts',
     plugins: [typescript(), terser()],
     output: [
-      { file: pkg.exports['./char'].import, format: 'es' },
-      { file: pkg.exports['./char'].require, format: 'cjs' },
+      { file: pkg.exports['./char'].import, format: 'es', sourcemap: true },
+      { file: pkg.exports['./char'].require, format: 'cjs', sourcemap: true },
     ],
   },
 ];

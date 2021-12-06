@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.5.3
+
+- source-map files;
+- minor documentation update.
+
 ## Version 0.5.2
 
 - `peek` function keeps Parser/Matcher distinction;

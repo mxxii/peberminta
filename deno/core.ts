@@ -312,6 +312,10 @@ function mapOuter<TValue1,TValue2> (
  *
  * Use {@link map1} if some matched values can't be mapped.
  *
+ * Use {@link ab} to map over values of two consecutive parsers.
+ *
+ * Use {@link abc} to map over values of three consecutive parsers.
+ *
  * @param p - A base matcher.
  * @param mapper - A function that modifies the matched value.
  */
