@@ -37,6 +37,11 @@ For when you wanna do weird things with parsers.
 - **Bring your own lexer/tokenizer** - if you need it. It doesn't matter how tokens are made - this package can consume anything you can type. I have a lexer as well, called [leac](https://github.com/mxxii/leac), and it is used in some examples, but there is nothing special about it to make it the best match (well, maybe the fact it is written in TypeScript, has equal level of maintenance and is made with arrays instead of iterators in mind as well).
 
 
+## Changelog
+
+Available here: [CHANGELOG.md](https://github.com/mxxii/peberminta/blob/main/CHANGELOG.md)
+
+
 ## Install
 
 ### Node

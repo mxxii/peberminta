@@ -12,7 +12,8 @@
     "deno",
     "docs",
     "lib",
-    "node_modules"
+    "node_modules",
+    "**/__*.*"
   ],
   "parserOptions": {
     "sourceType": "module",

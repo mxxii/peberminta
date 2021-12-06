@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.5.4
+
+- remove terser, source-map files;
+- use only `rollup-plugin-cleanup` to condition published files.
+
 ## Version 0.5.3
 
 - source-map files;
