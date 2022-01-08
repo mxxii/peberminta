@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.6.0
+
+- ensure local imports have file extensions - fix "./core module cannot be found" issue.
+
 ## Version 0.5.4
 
 - remove terser, source-map files;
