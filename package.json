@@ -66,7 +66,7 @@
     "lint:md": "markdownlint-cli2",
     "lint": "concurrently npm:lint:*",
     "prepublishOnly": "npm run build && npm run checkAll",
-    "test": "ava",
+    "test": "ava --timeout=20s",
     "ts": "node --experimental-specifier-resolution=node --loader ts-node/esm"
   },
   "dependencies": {},
