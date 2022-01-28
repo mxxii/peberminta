@@ -1,6 +1,6 @@
 import test, {ExecutionContext} from 'ava';
 
-import { Parser, all, many } from '../src/core';
+import { Parser, Result, all, many } from '../src/core';
 import {
   char, oneOf, anyOf, noneOf, charTest, str, concat,
   parserPosition, parse, tryParse, match
@@ -15,7 +15,7 @@ function helloMacro (
   t: ExecutionContext,
   p: Parser<string,unknown,unknown>,
   i: number,
-  expected: unknown
+  expected: Result<unknown>
 ) {
   t.deepEqual(p(dataHello, i), expected);
 }
@@ -24,7 +24,7 @@ function loremMacro (
   t: ExecutionContext,
   p: Parser<string,unknown,unknown>,
   i: number,
-  expected: unknown
+  expected: Result<unknown>
 ) {
   t.deepEqual(p(dataLorem, i), expected);
 }
@@ -199,28 +199,23 @@ test('parse - match', t => {
 });
 
 test('parse - nonmatch', t => {
-  const err = t.throws(() => parse(str('bye'), 'hello', {}));
-  t.is(err.message, 'No match');
+  t.throws(
+    () => parse(str('bye'), 'hello', {}),
+    { message: 'No match' }
+  );
 });
 
 test('parse - partial', t => {
-  const err = t.throws(() => parse(
-    str('hell'),
-    ['h', 'e', 'l', 'l', 'o'],
-    undefined
-  ));
-  t.is(err.message, 'Partial match. Parsing stopped at:\n    4\nhello\n    ^');
+  t.throws(
+    () => parse(str('hell'), ['h', 'e', 'l', 'l', 'o'], undefined),
+    { message: 'Partial match. Parsing stopped at:\n    4\nhello\n    ^' }
+  );
 });
 
 test('parse - partial - combining fallback', t => {
-  const err = t.throws(() => parse(
-    str('Ĺo͂řȩm̅'),
-    dataLorem.tokens,
-    undefined
-  ));
-  t.is(
-    err.message,
-    'Partial match. Parsing stopped at:\n     ...\n 2   ř\n 3   ȩ\n 4   m̅\n 5 > 🏳️‍🌈'
+  t.throws(
+    () => parse(str('Ĺo͂řȩm̅'), dataLorem.tokens, undefined),
+    { message: 'Partial match. Parsing stopped at:\n     ...\n 2   ř\n 3   ȩ\n 4   m̅\n 5 > 🏳️‍🌈' }
   );
 });
 

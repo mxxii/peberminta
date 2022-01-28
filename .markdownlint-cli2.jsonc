@@ -1,6 +1,7 @@
 {
   "config": {
     "default": true,
+    "emphasis-style": false,
     "first-line-heading": false,
     "line-length": false,
     "no-duplicate-header": { "allow_different_nesting": true },

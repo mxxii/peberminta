@@ -19,7 +19,7 @@ function numbers123Macro(
   t: ExecutionContext,
   p: Parser<number,unknown,unknown>,
   i: number,
-  expected: unknown
+  expected: Result<unknown>
 ) {
   t.deepEqual(p(data123, i), expected);
 }
@@ -125,16 +125,20 @@ test('error - string', t => {
   const parse = error(
     'No idea what just happened, deal with it!'
   );
-  const err = t.throws(() => parse(data123, 1));
-  t.is(err.message, 'No idea what just happened, deal with it!');
+  t.throws(
+    () => parse(data123, 1),
+    { message: 'No idea what just happened, deal with it!' }
+  );
 });
 
 test('error - function', t => {
   const parse = error(
     (data, i) => `Errored at position ${i} (0-based) of ${data.tokens.length}`
   );
-  const err = t.throws(() => parse(data123, 1));
-  t.is(err.message, 'Errored at position 1 (0-based) of 3');
+  t.throws(
+    () => parse(data123, 1),
+    { message: 'Errored at position 1 (0-based) of 3' }
+  );
 });
 
 test('token - on token - with value', numbers123Macro, tokenEven1, 1, {
@@ -164,8 +168,10 @@ test('token - onEnd throw', t => {
       value: 66
     }
   );
-  const err = t.throws(() => parse(data123, 3));
-  t.is(err.message, 'Required!');
+  t.throws(
+    () => parse(data123, 3),
+    { message: 'Required!' }
+  );
 });
 
 test('any - on token', numbers123Macro, any, 0, {
@@ -206,16 +212,15 @@ test('map - on end', numbers123Macro, map(
 
 test('map1 match - on token', numbers123Macro, map1(
   tokenEven1,
-  (x, data, i) => ({ ...x, foo: data.tokens[i] })
+  (x, data, i) => ({ ...x, value: { foo: data.tokens[i], bar: x.value } })
 ), 1, {
   matched: true,
   position: 2,
-  value: {
+  value: { foo: 22, bar: {
     value: 22,
     data: { tokens: [11,22,33], options: {} },
     i: 1
-  },
-  foo: 22
+  } }
 });
 
 test('map1 nonmatch - on token', numbers123Macro, map1(
@@ -1094,13 +1099,17 @@ test('parse - match', t => {
 });
 
 test('parse - nonmatch', t => {
-  const err = t.throws(() => parse(tokenEven, data123.tokens, {}));
-  t.is(err.message, 'No match');
+  t.throws(
+    () => parse(tokenEven, data123.tokens, {}),
+    { message: 'No match' }
+  );
 });
 
 test('parse - partial', t => {
-  const err = t.throws(() => parse(tokenOdd, data123.tokens, {}));
-  t.is(err.message, 'Partial match. Parsing stopped at:\n 0   11\n 1 > 22\n 2   33');
+  t.throws(
+    () => parse(tokenOdd, data123.tokens, {}),
+    { message: 'Partial match. Parsing stopped at:\n 0   11\n 1 > 22\n 2   33' }
+  );
 });
 
 test('tryParse - match', t => {
