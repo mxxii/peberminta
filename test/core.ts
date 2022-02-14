@@ -1,7 +1,7 @@
 import test, {ExecutionContext} from 'ava';
 
 import {
-  Parser, Matcher, Data, Result,
+  Parser, Matcher, Data, Result, Match,
   emit, of, make, action, fail, error, token, any, satisfy,
   map, map1, peek, option, not, choice, or, otherwise, longest,
   takeWhile, takeUntil, takeWhileP, takeUntilP, many, many1, some,
@@ -9,7 +9,7 @@ import {
   flatten1, sepBy1, sepBy, chainReduce, reduceLeft, reduceRight,
   leftAssoc1, rightAssoc1, leftAssoc2, rightAssoc2, condition,
   decide, chain, ahead, lookAhead, recursive, start, end,
-  remainingTokensNumber, parserPosition, parse, tryParse, match
+  remainingTokensNumber, parserPosition, parse, tryParse, match, either
 } from '../src/core';
 
 
@@ -327,6 +327,47 @@ test('choice - on end', numbers123Macro, choice(
 ), 3, { matched: false });
 
 test('choice - empty', numbers123Macro, choice(), 0, { matched: false });
+
+test('either - first type', t => {
+  const parser: Parser<string, unknown, string | number> = either(parseInt, matchString);
+  const result = parser({tokens: ['1'], options: null}, 0);
+  t.deepEqual(result, {
+    matched: true,
+    value: 1,
+    position: 1,
+  });
+});
+
+test('either - second type', t => {
+  const parser: Parser<string, unknown, string | number> = either(parseInt, matchString);
+  const result = parser({tokens: ['text'], options: null}, 0);
+  t.deepEqual(result, {
+    matched: true,
+    value: 'text',
+    position: 1,
+  });
+});
+
+function parseInt(data: Data<string, unknown>, index: number): Result<number> {
+  const integer = Number.parseInt(data.tokens[index]);
+  if (Number.isNaN(integer)) {
+    return {matched: false};
+  }
+
+  return {
+    matched: true,
+    value: integer,
+    position: index + 1,
+  };
+}
+
+function matchString(data: Data<string, unknown>, index: number): Match<string> {
+  return {
+    matched: true,
+    value: data.tokens[index],
+    position: index + 1,
+  };
+}
 
 test('otherwise - parser match', numbers123Macro, otherwise(
   tokenOdd,

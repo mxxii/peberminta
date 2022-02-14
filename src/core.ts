@@ -499,6 +499,28 @@ export function choice<TToken,TOptions,TValue> (
 export { choice as or };
 
 /**
+ * Make a parser that tries two parsers with different result types
+ * at the same position and returns the first successful match
+ * or a nonmatch if there was none.
+ *
+ * Like {@link choice} but with two different types.
+ *
+ * Nest calls to either if you need to combine more than two parsers!
+ *
+ * @param parser1 - First parser
+ * @param parser2 - Second parser
+ */
+export function either<TToken, TOptions, TValue1, TValue2>(
+  parser1: Parser<TToken, TOptions, TValue1>,
+  parser2: Parser<TToken, TOptions, TValue2>,
+): Parser<TToken, TOptions, TValue1 | TValue2> {
+  return choice(
+    parser1 as Parser<TToken, TOptions, TValue1 | TValue2>,
+    parser2 as Parser<TToken, TOptions, TValue1 | TValue2>,
+  );
+}
+
+/**
  * Make a {@link Matcher} from a parser and a matcher.
  * If the parser matched - return the match,
  * otherwise return the match from the matcher.
