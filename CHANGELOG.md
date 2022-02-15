@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 0.7.0
+
+- `otherwise` function now has two overloads - `Parser * Matcher -> Matcher` and `Parser * Parser -> Parser`;
+- `otherwise` function now accepts Parsers/Matchers with different value types, result value type is the union of the two;
+- `otherwise` function now has an alias called `eitherOr` which might be more natural for combining parsers.
+
 ## Version 0.6.0
 
 - ensure local imports have file extensions - fix "./core module cannot be found" issue.

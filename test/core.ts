@@ -3,7 +3,7 @@ import test, {ExecutionContext} from 'ava';
 import {
   Parser, Matcher, Data, Result,
   emit, of, make, action, fail, error, token, any, satisfy,
-  map, map1, peek, option, not, choice, or, otherwise, longest,
+  map, map1, peek, option, not, choice, or, otherwise, eitherOr, longest,
   takeWhile, takeUntil, takeWhileP, takeUntilP, many, many1, some,
   ab, left, right, abc, middle, all, and, skip, discard, flatten,
   flatten1, sepBy1, sepBy, chainReduce, reduceLeft, reduceRight,
@@ -354,6 +354,20 @@ test('otherwise - on end', numbers123Macro, otherwise(
   position: 3,
   value: 99
 });
+
+test('otherwise - different types - eitherOr alias', numbers123Macro, eitherOr(
+  tokenOdd,
+  emit('a string')
+), 1, {
+  matched: true,
+  position: 1,
+  value: 'a string'
+});
+
+test('otherwise - two parsers nonmatch - eitherOr alias', numbers123Macro, eitherOr(
+  tokenOdd,
+  map(tokenOdd, (v) => String(v))
+), 1, { matched: false });
 
 test('longest - empty', numbers123Macro, longest(), 0, { matched: false });
 

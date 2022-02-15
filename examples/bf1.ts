@@ -94,7 +94,7 @@ const unexpectedBracket = p.right(
 );
 
 const parseAll = p.map(
-  p.many(p.choice(
+  p.many(p.otherwise(
     parseAnyOp,
     unexpectedBracket
   )),

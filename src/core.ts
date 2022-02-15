@@ -478,7 +478,8 @@ export function not<TToken,TOptions,TValue> (
  * and returns the first successful match
  * or a nonmatch if there was none.
  *
- * Combine with {@link otherwise} if you want to return a {@link Matcher}.
+ * Combine with {@link otherwise} if you want to return a {@link Matcher}
+ * or you have a limited number of parsers of different types.
  *
  * @param ps - Parsers to try.
  */
@@ -499,32 +500,58 @@ export function choice<TToken,TOptions,TValue> (
 export { choice as or };
 
 /**
- * Make a {@link Matcher} from a parser and a matcher.
+ * This overload makes a {@link Matcher} from a parser and a matcher.
  * If the parser matched - return the match,
  * otherwise return the match from the matcher.
  *
  * Can be used to keep the matcher type when you have multiple parsing options
  * and the last one always matches.
  *
- * Combine with {@link choice} if you need multiple alternative parsers.
+ * Combine with {@link choice} if you need multiple alternative parsers of the same value type.
+ *
+ * Nest calls to have union of more than two different value types derived automatically.
  *
  * Use {@link option} if you just want a constant alternative value
  * without consuming input.
  *
- * @param p - A parser.
- * @param m - A matcher that is only called if the parser didn't match.
+ * @param pa - A parser.
+ * @param pb - A matcher that is only called if the parser didn't match.
  */
-export function otherwise<TToken,TOptions,TValue> (
-  p: Parser<TToken,TOptions,TValue>,
-  m: Matcher<TToken,TOptions,TValue>
-): Matcher<TToken,TOptions,TValue> {
+export function otherwise<TToken,TOptions,TValueA,TValueB> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Matcher<TToken,TOptions,TValueB>
+): Matcher<TToken,TOptions,TValueA|TValueB>;
+/**
+ * Make a parser that tries two parsers at the same position
+ * and returns the first successful match
+ * or a nonmatch if there was none.
+ *
+ * Use this if you want to combine parsers of different value types.
+ *
+ * Nest calls to have more than two different value types.
+ *
+ * Use {@link choice} if you have parsers of the same value type.
+ *
+ * @param pa - A parser that is tried first.
+ * @param pb - A parser that is only tried if the first one didn't match.
+ */
+export function otherwise<TToken,TOptions,TValueA,TValueB> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Parser<TToken,TOptions,TValueB>
+): Parser<TToken,TOptions,TValueA|TValueB>;
+export function otherwise<TToken,TOptions,TValueA,TValueB> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Parser<TToken,TOptions,TValueB>
+): Parser<TToken,TOptions,TValueA|TValueB> {
   return (data, i) => {
-    const r1 = p(data, i);
+    const r1 = pa(data, i);
     return (r1.matched)
       ? r1
-      : m(data,i);
+      : pb(data,i);
   };
 }
+
+export { otherwise as eitherOr };
 
 /**
  * Make a parser that tries all provided parsers at the same position

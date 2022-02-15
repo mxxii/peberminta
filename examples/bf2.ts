@@ -30,7 +30,7 @@ type Token = OpToken | number;
 
 const translate = p.flatten1(
   p.many(
-    p.choice(
+    p.eitherOr(
       pc.oneOf('<>+-.,') as p.Parser<string,unknown,Token>,
       p.recursive(() => brackets) as p.Parser<string,unknown,Token|Token[]>
     )
