@@ -43,7 +43,7 @@ jobs:
 
       - name: Upload coverage report to Codecov
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x' }}
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.info
