@@ -17,7 +17,7 @@
  * import * as p from 'https://deno.land/x/peberminta@.../char.ts';
  * ```
  *
- * @module
+ * @packageDocumentation
  */
 
 import {

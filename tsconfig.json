@@ -22,6 +22,7 @@
     ],
     "includeVersion": true,
     "out": "docs",
+    "searchInComments": true,
     "sort": "alphabetical"
   },
   "ts-node": {

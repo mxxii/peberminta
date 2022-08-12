@@ -14,7 +14,7 @@
  * import * as p from 'https://deno.land/x/peberminta@.../core.ts';
  * ```
  *
- * @module
+ * @packageDocumentation
  */
 
 import { clamp, escapeWhitespace } from './util.ts';

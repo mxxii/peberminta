@@ -1,103 +1,138 @@
 /* CSS to customize Typedoc's default theme. */
 
 :root {
-  --dark-color-background: #1B2B34;
-  --dark-color-secondary-background: #132026;
-  --dark-color-text: #cdd3de;
+  --dark-color-background-secondary: #1B2B34;
+  --dark-color-background: #132026;
+  --dark-color-icon-background: var(--dark-color-background);
+  --dark-color-accent: #ffffff33;
+  --dark-color-text: #ffffffbb;
   --dark-color-text-aside: #778692;
   --dark-color-link: #6699cc;
-  --dark-color-panel-divider: #ffffff33;
-  --dark-color-comment-tag: #5fb3b3;
-  --dark-color-comment-tag-text: #132026;
   --dark-color-ts: #c594c5;
   --dark-color-ts-interface: #99c794;
   --dark-color-ts-enum: #f99157;
   --dark-color-ts-class: #fac863;
+  --dark-color-ts-function: #9772ff;
+  --dark-color-ts-namespace: #e14dff;
   --dark-color-ts-private: #cdd3de;
-  --dark-color-toolbar: #132026;
+  --dark-color-ts-variable: #4d68ff;
   --dark-code-background: #0c1418;
+
+  --dark-color-tag: #5fb3b3;
+  --dark-color-tag-text: #132026;
 }
 
-ul.results {
-  background-color: #132026;
+/* Extra space between overloads */
+
+.tsd-signature ~ .tsd-signature {
+  margin-top: 4em;
 }
 
-.tsd-parameters h5,
-.tsd-type-parameters h4 {
+/* Monospace parameter names */
+
+.tsd-parameter-list > li > h5 {
   font-weight: normal;
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.tsd-parameters > li > .tsd-parameters {
-  border: 1px solid var(--color-panel-divider);
+/* Enclose whole parameter signatures rather than their type */
+
+.tsd-parameter-signature {
+  border: 1px solid var(--color-accent);
+  list-style: none;
+  margin-inline-start: -40px;
 }
 
-.tsd-parameters > li > .tsd-parameters > li > .tsd-descriptions {
+.tsd-parameter-signature > ul > .tsd-signature {
+  border: none;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+.tsd-parameter-signature > ul > .tsd-description {
   margin: 1em;
 }
 
-.tsd-parameters .tsd-signatures,
-.tsd-parameters .tsd-parameters .tsd-parameters {
-  border: 0;
-}
+/* Type parameters have no additional information on them */
 
-.tsd-type-parameters,
-.tsd-type-parameters-title {
+.tsd-type-parameters-title,
+.tsd-type-parameters {
   display: none;
 }
+
+/* Parameter flags - rest, optional */
+
+@media (prefers-color-scheme: dark) {
+  .tsd-tag {
+    border-radius: 4px;
+    color: var(--dark-color-tag-text);
+    background-color: var(--dark-color-tag);
+  }
+}
+
+/* Signature color highlighting */
 
 .tsd-signature-type {
   color: var(--color-ts-class);
 }
 
-.tsd-member [data-tsd-kind="Type parameter"] {
+.tsd-signature-type[data-tsd-kind] {
+  color: var(--color-ts);
+}
+
+.tsd-signature-type[data-tsd-kind="Type parameter"] {
   color: var(--color-ts-interface);
 }
 
-@media (prefers-color-scheme: dark) {
-  .tsd-typography {
-    color: #ffffff99;
-  }
-  .tsd-signatures .tsd-signature.current {
-    background-color: #ffffff22;
-  }
-}
-
-body.dark .tsd-typography {
-  color: #ffffff99;
-}
-
-body.dark .tsd-signatures .tsd-signature.current {
-  background-color: #ffffff22;
-}
-
-body.light .tsd-typography {
-  color: unset;
-}
-
-body.light .tsd-signatures .tsd-signature.current {
-  background-color: var(--color-panel-divider);
-}
-
-/* Navigation highlight seems to be broken and often points at a completely wrong item. */
-.tsd-navigation a {
-  border-left: 0;
-}
-
-.tsd-navigation.secondary li.focus > a,
-.tsd-navigation.secondary ul.current li.focus > a {
-  border-left-color: transparent;
-  /* background-color: #ffffff22; */
-}
+/* Search */
 
 #tsd-search.has-focus {
   background-color: var(--code-background);
 }
 
-#tsd-filter {
+#tsd-search > .results {
+  background-color: var(--color-background-secondary);
+}
+
+/* Unnecessary settings */
+
+.tsd-filter-visibility {
   display: none;
 }
 
-.headlessTable thead {
+/* Current item */
+
+.tsd-navigation.secondary li.current > a {
+  font-weight: bold;
+}
+
+.tsd-navigation.secondary li.current > a::after {
+  content: "\00a0←";
+}
+
+/* Tables */
+
+.headlessTable > table > thead {
   display: none;
+}
+
+.tsd-panel table {
+  width: 100%;
+  margin: 10px 0;
+  border-collapse: collapse;
+}
+
+.tsd-panel table th,
+.tsd-panel table td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-accent);
+}
+
+/* Code blocks don't need extra decorations */
+
+code, pre {
+  border-radius: 0;
+}
+
+pre {
+  border: none;
 }
