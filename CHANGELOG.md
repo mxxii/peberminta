@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+Targeting Node.js version 14 and ES2020.
+
 ## Version 0.7.0
 
 - `otherwise` function now has two overloads - `Parser * Matcher -> Matcher` and `Parser * Parser -> Parser`;

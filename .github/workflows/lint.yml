@@ -23,10 +23,10 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Use Node.js 12.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v2
         with:
-          node-version: 12.x
+          node-version: 14.x
 
       - run: npm ci
 
