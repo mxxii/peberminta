@@ -23,7 +23,13 @@
     "includeVersion": true,
     "out": "docs",
     "searchInComments": true,
-    "sort": "alphabetical"
+    "sort": "alphabetical",
+    "navigationLinks": {
+      "docs": "https://mxxii.github.io/peberminta/",
+      "github": "https://github.com/mxxii/peberminta",
+      "npm": "https://www.npmjs.com/package/peberminta",
+      "deno": "https://deno.land/x/peberminta"
+    }
   },
   "ts-node": {
     "compilerOptions": {
