@@ -13,7 +13,7 @@
     "docs",
     "lib",
     "node_modules",
-    "**/__*.*"
+    "__*"
   ],
   "parserOptions": {
     "sourceType": "module",
