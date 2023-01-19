@@ -474,15 +474,24 @@ export function not<TToken,TOptions,TValue> (
 }
 
 /**
+ * This overload makes a {@link Matcher} that tries multiple parsers (last entry is a matcher) at the same position
+ * and returns the first successful match.
+ *
+ * @param ps - Parsers to try.
+ */
+export function choice<TToken,TOptions,TValue> (
+  ...ps: [...Parser<TToken,TOptions,TValue>[], Matcher<TToken,TOptions,TValue>]
+): Matcher<TToken,TOptions,TValue>;
+/**
  * Make a parser that tries multiple parsers at the same position
  * and returns the first successful match
  * or a nonmatch if there was none.
  *
- * Combine with {@link otherwise} if you want to return a {@link Matcher}
- * or you have a limited number of parsers of different types.
- *
  * @param ps - Parsers to try.
  */
+export function choice<TToken,TOptions,TValue> (
+  ...ps: Parser<TToken,TOptions,TValue>[]
+): Parser<TToken,TOptions,TValue>;
 export function choice<TToken,TOptions,TValue> (
   ...ps: Parser<TToken,TOptions,TValue>[]
 ): Parser<TToken,TOptions,TValue> {
@@ -725,6 +734,31 @@ export function many1<TToken,TOptions,TValue> (
 export { many1 as some };
 
 /**
+ * This overload makes a {@link Matcher} that applies two matchers one after another and joins the results.
+ *
+ * Use {@link abc} if you want to join 3 different parsers/matchers.
+ *
+ * Use {@link left} or {@link right} if you want to keep one result and discard another.
+ *
+ * Use {@link all} if you want a sequence of parsers of arbitrary length (but they have to share a common value type).
+ *
+ * @param pa - First matcher.
+ * @param pb - Second matcher.
+ * @param join - A function to combine values from both matchers.
+ */
+export function ab<TToken,TOptions,TValueA,TValueB,TValue> (
+  pa: Matcher<TToken,TOptions,TValueA>,
+  pb: Matcher<TToken,TOptions,TValueB>,
+  /**
+   * @param va - A value matched by the first matcher.
+   * @param vb - A value matched by the second matcher.
+   * @param data - Data object (tokens and options).
+   * @param i - Parser position in the tokens array (before both matchers matched).
+   * @param j - Parser position in the tokens array (after both matchers matched).
+   */
+  join: (va: TValueA, vb: TValueB, data: Data<TToken,TOptions>, i: number, j: number) => TValue
+): Matcher<TToken,TOptions,TValue>;
+/**
  * Make a parser that tries two parsers one after another and joins the results.
  *
  * A nonmatch is returned if any of two parsers did not match.
@@ -737,7 +771,7 @@ export { many1 as some };
  *
  * @param pa - First parser.
  * @param pb - Second parser.
- * @param join - A function to combine matched results from both parsers.
+ * @param join - A function to combine matched values from both parsers.
  */
 export function ab<TToken,TOptions,TValueA,TValueB,TValue> (
   pa: Parser<TToken,TOptions,TValueA>,
@@ -750,6 +784,11 @@ export function ab<TToken,TOptions,TValueA,TValueB,TValue> (
    * @param j - Parser position in the tokens array (after both parsers matched).
    */
   join: (va: TValueA, vb: TValueB, data: Data<TToken,TOptions>, i: number, j: number) => TValue
+): Parser<TToken,TOptions,TValue>;
+export function ab<TToken,TOptions,TValueA,TValueB,TValue> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Parser<TToken,TOptions,TValueB>,
+  join: (va: TValueA, vb: TValueB, data: Data<TToken,TOptions>, i: number, j: number) => TValue
 ): Parser<TToken,TOptions,TValue> {
   return (data, i) => mapOuter(
     pa(data, i),
@@ -760,6 +799,19 @@ export function ab<TToken,TOptions,TValueA,TValueB,TValue> (
   );
 }
 
+/**
+ * This overload makes a {@link Matcher} that applies two matchers one after another
+ * and returns the result from the first one.
+ *
+ * Implementation is based on {@link ab}.
+ *
+ * @param pa - First matcher (result is returned).
+ * @param pb - Second matcher (result is discarded).
+ */
+export function left<TToken,TOptions,TValueA,TValueB> (
+  pa: Matcher<TToken,TOptions,TValueA>,
+  pb: Matcher<TToken,TOptions,TValueB>
+): Matcher<TToken,TOptions,TValueA>;
 /**
  * Make a parser that tries two parsers one after another
  * and returns the result from the first one if both matched.
@@ -774,10 +826,27 @@ export function ab<TToken,TOptions,TValueA,TValueB,TValue> (
 export function left<TToken,TOptions,TValueA,TValueB> (
   pa: Parser<TToken,TOptions,TValueA>,
   pb: Parser<TToken,TOptions,TValueB>
+): Parser<TToken,TOptions,TValueA>;
+export function left<TToken,TOptions,TValueA,TValueB> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Parser<TToken,TOptions,TValueB>
 ): Parser<TToken,TOptions,TValueA> {
   return ab(pa, pb, (va) => va);
 }
 
+/**
+ * This overload makes a {@link Matcher} that applies two matchers one after another
+ * and returns the result from the second one.
+ *
+ * Implementation is based on {@link ab}.
+ *
+ * @param pa - First matcher (result is discarded).
+ * @param pb - Second matcher (result is returned).
+ */
+export function right<TToken,TOptions,TValueA,TValueB> (
+  pa: Matcher<TToken,TOptions,TValueA>,
+  pb: Matcher<TToken,TOptions,TValueB>
+): Matcher<TToken,TOptions,TValueB>;
 /**
  * Make a parser that tries two parsers one after another
  * and returns the result from the second one if both matched.
@@ -792,10 +861,42 @@ export function left<TToken,TOptions,TValueA,TValueB> (
 export function right<TToken,TOptions,TValueA,TValueB> (
   pa: Parser<TToken,TOptions,TValueA>,
   pb: Parser<TToken,TOptions,TValueB>
+): Parser<TToken,TOptions,TValueB>;
+export function right<TToken,TOptions,TValueA,TValueB> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Parser<TToken,TOptions,TValueB>
 ): Parser<TToken,TOptions,TValueB> {
   return ab(pa, pb, (va, vb) => vb);
 }
 
+/**
+ * This overload makes a {@link Matcher} that applies three matchers one after another and joins the results.
+ *
+ * Use {@link ab} if you want to join just 2 different parsers/matchers.
+ *
+ * Use {@link middle} if you want to keep only the middle result and discard two others.
+ *
+ * Use {@link all} if you want a sequence of parsers of arbitrary length (but they have to share a common value type).
+ *
+ * @param pa - First matcher.
+ * @param pb - Second matcher.
+ * @param pc - Third matcher.
+ * @param join - A function to combine matched values from all three matchers.
+ */
+export function abc<TToken,TOptions,TValueA,TValueB,TValueC,TValue> (
+  pa: Matcher<TToken,TOptions,TValueA>,
+  pb: Matcher<TToken,TOptions,TValueB>,
+  pc: Matcher<TToken,TOptions,TValueC>,
+  /**
+   * @param va - A value matched by the first matcher.
+   * @param vb - A value matched by the second matcher.
+   * @param vc - A value matched by the third matcher.
+   * @param data - Data object (tokens and options).
+   * @param i - Parser position in the tokens array (before all three matchers matched).
+   * @param j - Parser position in the tokens array (after all three matchers matched).
+   */
+  join: (va: TValueA, vb: TValueB, vc: TValueC, data: Data<TToken,TOptions>, i: number, j: number) => TValue
+): Matcher<TToken,TOptions,TValue>;
 /**
  * Make a parser that tries three parsers one after another and joins the results.
  *
@@ -825,6 +926,12 @@ export function abc<TToken,TOptions,TValueA,TValueB,TValueC,TValue> (
    * @param j - Parser position in the tokens array (after all three parsers matched).
    */
   join: (va: TValueA, vb: TValueB, vc: TValueC, data: Data<TToken,TOptions>, i: number, j: number) => TValue
+): Parser<TToken,TOptions,TValue>;
+export function abc<TToken,TOptions,TValueA,TValueB,TValueC,TValue> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Parser<TToken,TOptions,TValueB>,
+  pc: Parser<TToken,TOptions,TValueC>,
+  join: (va: TValueA, vb: TValueB, vc: TValueC, data: Data<TToken,TOptions>, i: number, j: number) => TValue
 ): Parser<TToken,TOptions,TValue> {
   return (data, i) => mapOuter(
     pa(data, i),
@@ -838,6 +945,21 @@ export function abc<TToken,TOptions,TValueA,TValueB,TValueC,TValue> (
   );
 }
 
+/**
+ * This overload makes a {@link Matcher} that applies three matchers one after another
+ * and returns the middle result.
+ *
+ * Implementation is based on {@link abc}.
+ *
+ * @param pa - First matcher (result is discarded).
+ * @param pb - Second matcher (result is returned).
+ * @param pc - Third matcher (result is discarded).
+ */
+export function middle<TToken,TOptions,TValueA,TValueB,TValueC> (
+  pa: Matcher<TToken,TOptions,TValueA>,
+  pb: Matcher<TToken,TOptions,TValueB>,
+  pc: Matcher<TToken,TOptions,TValueC>
+): Matcher<TToken,TOptions,TValueB>;
 /**
  * Make a parser that tries three parsers one after another
  * and returns the middle result if all three matched.
@@ -854,6 +976,11 @@ export function middle<TToken,TOptions,TValueA,TValueB,TValueC> (
   pa: Parser<TToken,TOptions,TValueA>,
   pb: Parser<TToken,TOptions,TValueB>,
   pc: Parser<TToken,TOptions,TValueC>
+): Parser<TToken,TOptions,TValueB>;
+export function middle<TToken,TOptions,TValueA,TValueB,TValueC> (
+  pa: Parser<TToken,TOptions,TValueA>,
+  pb: Parser<TToken,TOptions,TValueB>,
+  pc: Parser<TToken,TOptions,TValueC>
 ): Parser<TToken,TOptions,TValueB> {
   return abc(
     pa,
@@ -864,6 +991,15 @@ export function middle<TToken,TOptions,TValueA,TValueB,TValueC> (
 }
 
 /**
+ * This overload makes a {@link Matcher} that runs all given matchers one after another
+ * and returns all results in an array.
+ *
+ * @param ps - Matchers to run sequentially.
+ */
+export function all<TToken,TOptions,TValue> (
+  ...ps: Matcher<TToken,TOptions,TValue>[]
+): Matcher<TToken,TOptions,TValue[]>;
+/**
  * Make a parser that runs all given parsers one after another
  * and returns all results in an array.
  *
@@ -873,6 +1009,9 @@ export function middle<TToken,TOptions,TValueA,TValueB,TValueC> (
  *
  * @param ps - Parsers to run sequentially.
  */
+export function all<TToken,TOptions,TValue> (
+  ...ps: Parser<TToken,TOptions,TValue>[]
+): Parser<TToken,TOptions,TValue[]>;
 export function all<TToken,TOptions,TValue> (
   ...ps: Parser<TToken,TOptions,TValue>[]
 ): Parser<TToken,TOptions,TValue[]> {
@@ -899,8 +1038,23 @@ export function all<TToken,TOptions,TValue> (
 export { all as and };
 
 /**
+ * This overload makes a {@link Matcher} that runs all given matchers in sequence
+ * and discards (skips) all results (Returns a match with a dummy value).
+ *
+ * Implementation is based on {@link all} and {@link map}.
+ *
+ * This function only exists to make the intent clear.
+ * Use in combination with {@link left}, {@link right} or other combinators
+ * to make the `null` result disappear.
+ *
+ * @param ps - Parsers to run sequentially.
+ */
+export function skip<TToken,TOptions> (
+  ...ps: Matcher<TToken,TOptions,unknown>[]
+): Matcher<TToken,TOptions,unknown>;
+/**
  * Make a parser that runs all given parsers in sequence
- * and discards (skips) all results (Returns a match with a single `null` value).
+ * and discards (skips) all results (Returns a match with a dummy value).
  *
  * Nonmatch is returned if any of parsers didn't match.
  *
@@ -912,6 +1066,9 @@ export { all as and };
  *
  * @param ps - Parsers to run sequentially.
  */
+export function skip<TToken,TOptions> (
+  ...ps: Parser<TToken,TOptions,unknown>[]
+): Parser<TToken,TOptions,unknown>;
 export function skip<TToken,TOptions> (
   ...ps: Parser<TToken,TOptions,unknown>[]
 ): Parser<TToken,TOptions,unknown> {
@@ -1262,6 +1419,25 @@ export function rightAssoc2<TToken,TOptions,TLeft,TRight> (
 }
 
 /**
+ * This overload makes a {@link Matcher} that chooses between two given matchers based on a condition.
+ * This makes possible to allow/disallow a grammar based on context/options.
+ *
+ * {@link decide} and {@link chain} allow for more complex dynamic rules.
+ *
+ * @param cond - Condition.
+ * @param pTrue - Matcher to run when the condition is true.
+ * @param pFalse - Matcher to run when the condition is false.
+ */
+export function condition<TToken,TOptions,TValueA,TValueB> (
+  /**
+   * @param data - Data object (tokens and options).
+   * @param i - Parser position in the tokens array (before parsing).
+   */
+  cond: (data: Data<TToken,TOptions>, i: number) => boolean,
+  pTrue: Matcher<TToken,TOptions,TValueA>,
+  pFalse: Matcher<TToken,TOptions,TValueB>
+): Matcher<TToken,TOptions,TValueA|TValueB>;
+/**
  * Make a parser that chooses between two given parsers based on a condition.
  * This makes possible to allow/disallow a grammar based on context/options.
  *
@@ -1271,15 +1447,20 @@ export function rightAssoc2<TToken,TOptions,TLeft,TRight> (
  * @param pTrue - Parser to run when the condition is true.
  * @param pFalse - Parser to run when the condition is false.
  */
-export function condition<TToken,TOptions,TValue> (
+export function condition<TToken,TOptions,TValueA,TValueB> (
   /**
    * @param data - Data object (tokens and options).
    * @param i - Parser position in the tokens array (before parsing).
    */
   cond: (data: Data<TToken,TOptions>, i: number) => boolean,
-  pTrue: Parser<TToken,TOptions,TValue>,
-  pFalse: Parser<TToken,TOptions,TValue>
-): Parser<TToken,TOptions,TValue> {
+  pTrue: Parser<TToken,TOptions,TValueA>,
+  pFalse: Parser<TToken,TOptions,TValueB>
+): Parser<TToken,TOptions,TValueA|TValueB>;
+export function condition<TToken,TOptions,TValueA,TValueB> (
+  cond: (data: Data<TToken,TOptions>, i: number) => boolean,
+  pTrue: Parser<TToken,TOptions,TValueA>,
+  pFalse: Parser<TToken,TOptions,TValueB>
+): Parser<TToken,TOptions,TValueA|TValueB> {
   return (data, i) => (cond(data, i))
     ? pTrue(data, i)
     : pFalse(data, i);

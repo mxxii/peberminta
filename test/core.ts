@@ -15,11 +15,11 @@ import {
 
 const data123 = { tokens: [11,22,33], options: {} };
 
-function numbers123Macro(
+function numbers123Macro<TResult>(
   t: ExecutionContext,
-  p: Parser<number,unknown,unknown>,
+  p: Parser<number,unknown,TResult>,
   i: number,
-  expected: Result<unknown>
+  expected: Result<TResult>
 ) {
   t.deepEqual(p(data123, i), expected);
 }

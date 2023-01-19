@@ -221,11 +221,11 @@ function factorial (n: number)
   return result;
 }
 
-const factorial_: p.Parser<Token,unknown,number> = p.leftAssoc1(
+const factorial_ = p.leftAssoc1(
   atom_,
   p.map(
     literal('!'),
-    () => (x) => factorial(x)
+    () => (x: number) => factorial(x)
   )
 );
 
