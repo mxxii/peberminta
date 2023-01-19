@@ -88,7 +88,7 @@
     "leac": "^0.6.0",
     "markdownlint-cli2": "^0.6.0",
     "rimraf": "^4.1.1",
-    "rollup": "^2.79.1",
+    "rollup": "^3.10.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "ts-node": "^10.9.1",
     "tsd": "^0.25.0",
