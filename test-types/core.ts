@@ -1,4 +1,4 @@
-import { expectNotType, expectType } from 'tsd';
+import { expectTypeOf } from 'expect-type';
 
 import {
   Parser, Matcher,
@@ -8,173 +8,141 @@ import {
 } from '../src/core';
 
 
-const parser = token((t) => t === 42 ? t : undefined);
+const parser = token((t) => t === 42 ? 42 as const : undefined);
 const matcher = make(() => 39 as const);
 
 // map
 
-expectType<Parser<unknown, unknown, 42>>( map(parser, x => x) );
-expectNotType<Matcher<unknown, unknown, 42>>( map(parser, x => x) );
+expectTypeOf( map(parser, x => x) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Matcher<unknown, unknown, 39>>( map(matcher, x => x) );
+expectTypeOf( map(matcher, x => x) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
 // peek
 
-expectType<Parser<unknown, unknown, 42>>( peek(parser, () => { /* placeholder */ }) );
-expectNotType<Matcher<unknown, unknown, 42>>( peek(parser, () => { /* placeholder */ }) );
+expectTypeOf( peek(parser, () => { /* placeholder */ }) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Matcher<unknown, unknown, 39>>( peek(matcher, () => { /* placeholder */ }) );
+expectTypeOf( peek(matcher, () => { /* placeholder */ }) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
 // choice
 
-expectType<Parser<unknown, unknown, 42>>( choice(parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( choice(parser) );
+expectTypeOf( choice(parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Parser<unknown, unknown, unknown>>( choice() );
-expectNotType<Matcher<unknown, unknown, unknown>>( choice() );
+expectTypeOf( choice() ).toEqualTypeOf<Parser<unknown, unknown, unknown>>();
 
-expectType<Matcher<unknown, unknown, 39>>( choice(matcher) );
+expectTypeOf( choice(matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
-expectType<Matcher<unknown, unknown, 42 | 39>>( choice(parser, matcher) );
+expectTypeOf( choice(parser, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 42 | 39>>();
 
 // otherwise
 
-expectType<Parser<unknown, unknown, 42>>( otherwise(parser, parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( otherwise(parser, parser) );
+expectTypeOf( otherwise(parser, parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Matcher<unknown, unknown, 42 | 39>>( otherwise(parser, matcher) );
+expectTypeOf( otherwise(parser, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 42 | 39>>();
 
 // ab
 
-expectType<Parser<unknown, unknown, readonly [42, 42]>>( ab(parser, parser, (a, b) => [a, b] as const) );
-expectNotType<Matcher<unknown, unknown, readonly [42, 42]>>( ab(parser, parser, (a, b) => [a, b] as const) );
+expectTypeOf( ab(parser, parser, (a, b) => [a, b] as const) ).toEqualTypeOf<Parser<unknown, unknown, readonly [42, 42]>>();
 
-expectType<Parser<unknown, unknown, readonly [42, 39]>>( ab(parser, matcher, (a, b) => [a, b] as const) );
-expectNotType<Matcher<unknown, unknown, readonly [42, 39]>>( ab(parser, matcher, (a, b) => [a, b] as const) );
+expectTypeOf( ab(parser, matcher, (a, b) => [a, b] as const) ).toEqualTypeOf<Parser<unknown, unknown, readonly [42, 39]>>();
 
-expectType<Parser<unknown, unknown, readonly [39, 42]>>( ab(matcher, parser, (a, b) => [a, b] as const) );
-expectNotType<Matcher<unknown, unknown, readonly [39, 42]>>( ab(matcher, parser, (a, b) => [a, b] as const) );
+expectTypeOf( ab(matcher, parser, (a, b) => [a, b] as const) ).toEqualTypeOf<Parser<unknown, unknown, readonly [39, 42]>>();
 
-expectType<Matcher<unknown, unknown, readonly [39, 39]>>( ab(matcher, matcher, (a, b) => [a, b] as const) );
+expectTypeOf( ab(matcher, matcher, (a, b) => [a, b] as const) ).toEqualTypeOf<Matcher<unknown, unknown, readonly [39, 39]>>();
 
 // left
 
-expectType<Parser<unknown, unknown, 42>>( left(parser, parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( left(parser, parser) );
+expectTypeOf( left(parser, parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Parser<unknown, unknown, 42>>( left(parser, matcher) );
-expectNotType<Matcher<unknown, unknown, 42>>( left(parser, matcher) );
+expectTypeOf( left(parser, matcher) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Parser<unknown, unknown, 39>>( left(matcher, parser) );
-expectNotType<Matcher<unknown, unknown, 39>>( left(matcher, parser) );
+expectTypeOf( left(matcher, parser) ).toEqualTypeOf<Parser<unknown, unknown, 39>>();
 
-expectType<Matcher<unknown, unknown, 39>>( left(matcher, matcher) );
+expectTypeOf( left(matcher, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
 // right
 
-expectType<Parser<unknown, unknown, 42>>( right(parser, parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( right(parser, parser) );
+expectTypeOf( right(parser, parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Parser<unknown, unknown, 39>>( right(parser, matcher) );
-expectNotType<Matcher<unknown, unknown, 39>>( right(parser, matcher) );
+expectTypeOf( right(parser, matcher) ).toEqualTypeOf<Parser<unknown, unknown, 39>>();
 
-expectType<Parser<unknown, unknown, 42>>( right(matcher, parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( right(matcher, parser) );
+expectTypeOf( right(matcher, parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Matcher<unknown, unknown, 39>>( right(matcher, matcher) );
+expectTypeOf( right(matcher, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
 // abc
 
-expectType<Parser<unknown, unknown, readonly [42, 42, 39]>>( abc(parser, parser, matcher, (a, b, c) => [a, b, c] as const) );
-expectNotType <Matcher<unknown, unknown, readonly [42, 42, 39]>>( abc(parser, parser, matcher, (a, b, c) => [a, b, c] as const) );
+expectTypeOf( abc(parser, parser, matcher, (a, b, c) => [a, b, c] as const) ).toEqualTypeOf<Parser<unknown, unknown, readonly [42, 42, 39]>>();
 
-expectType<Parser<unknown, unknown, readonly [42, 39, 39]>>( abc(parser, matcher, matcher, (a, b, c) => [a, b, c] as const) );
-expectNotType<Matcher<unknown, unknown, readonly [42, 42, 39]>>( abc(parser, matcher, matcher, (a, b, c) => [a, b, c] as const) );
+expectTypeOf( abc(parser, matcher, matcher, (a, b, c) => [a, b, c] as const) ).toEqualTypeOf<Parser<unknown, unknown, readonly [42, 39, 39]>>();
 
-expectType<Parser<unknown, unknown, readonly [39, 42, 39]>>( abc(matcher, parser, matcher, (a, b, c) => [a, b, c] as const) );
-expectNotType<Matcher<unknown, unknown, readonly [42, 42, 39]>>( abc(matcher, parser, matcher, (a, b, c) => [a, b, c] as const) );
+expectTypeOf( abc(matcher, parser, matcher, (a, b, c) => [a, b, c] as const) ).toEqualTypeOf<Parser<unknown, unknown, readonly [39, 42, 39]>>();
 
-expectType<Matcher<unknown, unknown, readonly [39, 39, 39]>>( abc(matcher, matcher, matcher, (a, b, c) => [a, b, c] as const) );
+expectTypeOf( abc(matcher, matcher, matcher, (a, b, c) => [a, b, c] as const) ).toEqualTypeOf<Matcher<unknown, unknown, readonly [39, 39, 39]>>();
 
 // middle
 
-expectType<Parser<unknown, unknown, 42>>( middle(parser, parser, parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( middle(parser, parser, parser) );
+expectTypeOf( middle(parser, parser, parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Parser<unknown, unknown, 39>>( middle(parser, matcher, matcher) );
-expectNotType<Matcher<unknown, unknown, 39>>( middle(parser, matcher, matcher) );
+expectTypeOf( middle(parser, matcher, matcher) ).toEqualTypeOf<Parser<unknown, unknown, 39>>();
 
-expectType<Parser<unknown, unknown, 42>>( middle(matcher, parser, matcher) );
-expectNotType<Matcher<unknown, unknown, 42>>( middle(matcher, parser, matcher) );
+expectTypeOf( middle(matcher, parser, matcher) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Matcher<unknown, unknown, 39>>( middle(matcher, matcher, matcher) );
+expectTypeOf( middle(matcher, matcher, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
 // all
 
-expectType<Parser<unknown, unknown, 42[]>>( all(parser) );
-expectNotType<Matcher<unknown, unknown, 42[]>>( all(parser) );
+expectTypeOf( all(parser) ).toEqualTypeOf<Parser<unknown, unknown, 42[]>>();
 
-expectType<Parser<unknown, unknown, (42 | 39)[]>>( all(parser, matcher) );
-expectNotType<Matcher<unknown, unknown, (42 | 39)[]>>( all(parser, matcher) );
+expectTypeOf( all(parser, matcher) ).toEqualTypeOf<Parser<unknown, unknown, (42 | 39)[]>>();
 
-expectType<Matcher<unknown, unknown, unknown[]>>( all() );
+expectTypeOf( all() ).toEqualTypeOf<Matcher<unknown, unknown, unknown[]>>();
 
-expectType<Matcher<unknown, unknown, 39[]>>( all(matcher, matcher) );
+expectTypeOf( all(matcher, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39[]>>();
 
 // skip
 
-expectType<Parser<unknown, unknown, unknown>>( skip(parser) );
-expectNotType<Matcher<unknown, unknown, unknown>>( skip(parser) );
+expectTypeOf( skip(parser) ).toEqualTypeOf<Parser<unknown, unknown, unknown>>();
 
-expectType<Parser<unknown, unknown, unknown>>( skip(parser, matcher) );
-expectNotType<Matcher<unknown, unknown, unknown>>( skip(parser, matcher) );
+expectTypeOf( skip(parser, matcher) ).toEqualTypeOf<Parser<unknown, unknown, unknown>>();
 
-expectType<Matcher<unknown, unknown, unknown>>( skip() );
+expectTypeOf( skip() ).toEqualTypeOf<Matcher<unknown, unknown, unknown>>();
 
-expectType<Matcher<unknown, unknown, unknown>>( skip(matcher, matcher) );
+expectTypeOf( skip(matcher, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, unknown>>();
 
 // flatten
 
-expectType<Parser<unknown, unknown, 42[]>>( flatten(parser) );
-expectNotType<Matcher<unknown, unknown, 42[]>>( flatten(parser) );
+expectTypeOf( flatten(parser) ).toEqualTypeOf<Parser<unknown, unknown, 42[]>>();
 
-expectType<Parser<unknown, unknown, (42 | 39)[]>>( flatten(parser, matcher) );
-expectNotType<Matcher<unknown, unknown, (42 | 39)[]>>( flatten(parser, matcher) );
+expectTypeOf( flatten(parser, matcher) ).toEqualTypeOf<Parser<unknown, unknown, (42 | 39)[]>>();
 
-expectType<Matcher<unknown, unknown, unknown[]>>( flatten() );
+expectTypeOf( flatten() ).toEqualTypeOf<Matcher<unknown, unknown, unknown[]>>();
 
-expectType<Matcher<unknown, unknown, 39[]>>( flatten(matcher, matcher) );
+expectTypeOf( flatten(matcher, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39[]>>();
 
 // flatten1
 
-expectType<Parser<unknown, unknown, 42[]>>( flatten1(many1(parser)) );
-expectNotType<Matcher<unknown, unknown, 42[]>>( flatten1(many1(parser)) );
+expectTypeOf( flatten1(many1(parser)) ).toEqualTypeOf<Parser<unknown, unknown, 42[]>>();
 
-expectType<Matcher<unknown, unknown, 39[]>>( flatten1(many(matcher)) );
+expectTypeOf( flatten1(many(matcher)) ).toEqualTypeOf<Matcher<unknown, unknown, 39[]>>();
 
 // condition
 
-expectType<Parser<unknown, unknown, 42>>( condition(() => true, parser, parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( condition(() => true, parser, parser) );
+expectTypeOf( condition(() => true, parser, parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Parser<unknown, unknown, 42 | 39>>( condition(() => true, parser, matcher) );
-expectNotType<Matcher<unknown, unknown, 42 | 39>>( condition(() => true, parser, matcher) );
+expectTypeOf( condition(() => true, parser, matcher) ).toEqualTypeOf<Parser<unknown, unknown, 42 | 39>>();
 
-expectType<Parser<unknown, unknown, 42 | 39>>( condition(() => true, matcher, parser) );
-expectNotType<Matcher<unknown, unknown, 42 | 39>>( condition(() => true, matcher, parser) );
+expectTypeOf( condition(() => true, matcher, parser) ).toEqualTypeOf<Parser<unknown, unknown, 42 | 39>>();
 
-expectType<Matcher<unknown, unknown, 39>>( condition(() => true, matcher, matcher) );
+expectTypeOf( condition(() => true, matcher, matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
 // ahead
 
-expectType<Parser<unknown, unknown, 42>>( ahead(parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( ahead(parser) );
+expectTypeOf( ahead(parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Matcher<unknown, unknown, 39>>( ahead(matcher) );
+expectTypeOf( ahead(matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();
 
 // recursive
 
-expectType<Parser<unknown, unknown, 42>>( recursive(() => parser) );
-expectNotType<Matcher<unknown, unknown, 42>>( recursive(() => parser) );
+expectTypeOf( recursive(() => parser) ).toEqualTypeOf<Parser<unknown, unknown, 42>>();
 
-expectType<Matcher<unknown, unknown, 39>>( recursive(() => matcher) );
+expectTypeOf( recursive(() => matcher) ).toEqualTypeOf<Matcher<unknown, unknown, 39>>();

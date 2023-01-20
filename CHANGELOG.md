@@ -4,7 +4,7 @@
 
 - many functions got overloads for `Matcher` type propagation in less common scenarios;
 - `condition` function now accepts Parsers/Matchers with different value types, result value type is the union of the two;
-- added type tests for overloads using [tsd](https://github.com/SamVerschueren/tsd).
+- added type tests for overloads using [expect-type](https://github.com/mmkal/expect-type).
 
 ## Version 0.8.0
 
