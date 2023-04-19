@@ -10,11 +10,6 @@ jobs:
       matrix:
         node-version: [14.x, 16.x]
         os: [ubuntu-latest, windows-latest]
-        include:
-          - os: windows-latest
-            get-cache-path: '"dir=$(npm config get cache)" >> $env:GITHUB_OUTPUT'
-          - os: ubuntu-latest
-            get-cache-path: 'echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT'
 
     runs-on: ${{ matrix.os }}
 
@@ -25,18 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: ${{ matrix.get-cache-path }}
-
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: 'npm'
 
       - run: npm ci
 
