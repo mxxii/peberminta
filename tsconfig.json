@@ -6,31 +6,6 @@
   "compilerOptions": {
     "outDir": "./lib"
   },
-  "typedocOptions": {
-    "categorizeByGroup": false,
-    "categoryOrder": [
-      "Type aliases",
-      "Parsers",
-      "Utility functions"
-    ],
-    "customCss": "./assets/docs.css",
-    "defaultCategory": "Parsers",
-    "disableSources": true,
-    "entryPoints": [
-      "src/core.ts",
-      "src/char.ts"
-    ],
-    "includeVersion": true,
-    "out": "docs",
-    "searchInComments": true,
-    "sort": "alphabetical",
-    "navigationLinks": {
-      "docs": "https://mxxii.github.io/peberminta/",
-      "github": "https://github.com/mxxii/peberminta",
-      "npm": "https://www.npmjs.com/package/peberminta",
-      "deno": "https://deno.land/x/peberminta"
-    }
-  },
   "ts-node": {
     "compilerOptions": {
       "module": "ESNext",
