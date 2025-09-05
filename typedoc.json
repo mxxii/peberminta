@@ -2,7 +2,8 @@
   "$schema": "https://typedoc.org/schema.json",
   "categorizeByGroup": false,
   "categoryOrder": [
-    "Type aliases",
+    "Core types",
+    "Utility types",
     "Parsers",
     "Utility functions"
   ],
@@ -17,6 +18,7 @@
   "out": "docs",
   "searchInComments": true,
   "sort": [ "alphabetical" ],
+  "sortEntryPoints": false,
   "navigationLinks": {
     "docs": "https://mxxii.github.io/peberminta/",
     "github": "https://github.com/mxxii/peberminta",

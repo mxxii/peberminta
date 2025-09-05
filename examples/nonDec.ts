@@ -2,24 +2,25 @@
 // Break a numbers array into non-decreasing fragments
 // (i.e. arrays where `x[i+1] >= x[i]`).
 
-import * as p from '../src/core';
+
+import * as p from '../src/core.ts';
 
 
 // Build up the parser from smaller, simpler parts
 
-const number_: p.Parser<number,unknown,number> = p.any;
+const number_: p.Parser<number, unknown, number> = p.any;
 
 // Cutting corners here by using the fact `p.map` exposes indices before and after a match.
 // If everything were hidden it would've required to rely on accumulator instead.
 const nonDecSequence_ = p.map(
   p.chain(
     number_,
-    (v1) => p.chainReduce(
+    v1 => p.chainReduce(
       v1,
-      (maxValue) => p.satisfy((t) => t >= maxValue)
-    )
+      maxValue => p.satisfy(t => t >= maxValue),
+    ),
   ),
-  (v, data, i, j) => data.tokens.slice(i, j)
+  (v, data, i, j) => data.tokens.slice(i, j),
 );
 
 const nonDecSequences_ = p.many(nonDecSequence_);
@@ -47,9 +48,9 @@ const nextInt = (function () {
   };
 })();
 
-const randomArray = Array.from({length: 1_000_000}, () => nextInt());
+const randomArray = Array.from({ length: 1_000_000 }, () => nextInt());
 
-const increasingArray = Array.from({length: 1_000_000}, (e,i) => i);
+const increasingArray = Array.from({ length: 1_000_000 }, (e, i) => i);
 
 const arrayWithRepetitions = [1, 1, 2, 2, 3, 3, 4, 5, -6, 5, 4, 3, 3, 2, 7, 8, 8, 9];
 
@@ -66,7 +67,7 @@ console.log(`\`arrayWithRepetitions\` is broken into ${repetitiveResult.length} 
 console.log('Parts:');
 repetitiveResult.forEach((xs) => {
   console.log(
-    '[ ' + xs.join(', ') + ' ]'
+    '[ ' + xs.join(', ') + ' ]',
   );
 });
 console.log('');
@@ -76,7 +77,7 @@ console.log(`\`randomArray\` is broken into ${pseudorandomResult.length} part(s)
 console.log('First 16 parts:');
 pseudorandomResult.slice(0, 16).forEach((xs) => {
   console.log(
-    '[ ' + xs.map((x) => String(x).replace(/\B(?=(\d{3})+(?!\d))/g, '_')).join(', ') + ' ]'
+    '[ ' + xs.map(x => String(x).replace(/\B(?=(\d{3})+(?!\d))/g, '_')).join(', ') + ' ]',
   );
 });
 

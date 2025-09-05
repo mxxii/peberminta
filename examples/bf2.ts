@@ -4,18 +4,19 @@
 // Parser position is being manipulated by the parsed code,
 // making it to behave exactly like an instruction pointer of an interpreting machine.
 
-import * as p from '../src/core';
-import * as pc from '../src/char';
+
+import * as p from '../src/core.ts';
+import * as pc from '../src/char.ts';
 
 
 // Types
 
 type State = {
-  pointer: number,   // points at a memory cell
-  memory:  number[], // memory tape
-  input:   number[], // input buffer for the read op
-  output:  number[], // output buffer for the write op
-  jumps:   number    // max number of jumps before terminating the computation
+  pointer: number;   // points at a memory cell
+  memory:  number[]; // memory tape
+  input:   number[]; // input buffer for the read op
+  output:  number[]; // output buffer for the write op
+  jumps:   number;    // max number of jumps before terminating the computation
 };
 
 type OpToken = '<' | '>' | '+' | '-' | '.' | ',';
@@ -31,20 +32,20 @@ type Token = OpToken | number;
 const translate = p.flatten1(
   p.many(
     p.eitherOr(
-      pc.oneOf('<>+-.,') as p.Parser<string,unknown,Token>,
-      p.recursive(() => brackets) as p.Parser<string,unknown,Token|Token[]>
-    )
-  )
+      pc.oneOf('<>+-.,') as p.Parser<string, unknown, Token>,
+      p.recursive(() => brackets) as p.Parser<string, unknown, Token | Token[]>,
+    ),
+  ),
 );
 
-const brackets: p.Parser<string,unknown,Token[]> = p.abc(
+const brackets: p.Parser<string, unknown, Token[]> = p.abc(
   pc.char('['),
   translate,
   p.token(
-    (c) => (c === ']') ? c : undefined,
-    () => { throw new Error('Missing closing bracket!'); }
+    c => (c === ']') ? c : undefined,
+    () => { throw new Error('Missing closing bracket!'); },
   ),
-  ((lbr,ops) => [ops.length + 1, ...ops, -ops.length - 1])
+  (_, ops) => [ops.length + 1, ...ops, -ops.length - 1],
 );
 
 
@@ -52,12 +53,12 @@ const brackets: p.Parser<string,unknown,Token[]> = p.abc(
 
 function op (
   op: OpToken,
-  f: (state: State) => void
-): p.Parser<Token,State,true> {
+  f: (state: State) => void,
+): p.Parser<Token, State, true> {
   return p.middle(
-    p.satisfy((t) => t === op),
+    p.satisfy(t => t === op),
     p.emit(true),
-    p.action((data) => { f(data.options); })
+    p.action((data) => { f(data.options); }),
   );
 }
 
@@ -82,11 +83,11 @@ function goto (position: number): p.Match<true> {
   return {
     matched: true,
     position: position,
-    value: true
+    value: true,
   };
 }
 
-const jump: p.Parser<Token,State,true> = (data, i) => {
+const jump: p.Parser<Token, State, true> = (data, i) => {
   if (--data.options.jumps < 0) {
     throw new Error('Jumps counter exhausted!');
   }
@@ -104,7 +105,7 @@ const anyOp = p.choice(
   next, prev,
   inc, dec,
   write, read,
-  jump
+  jump,
 );
 
 const interpret = p.many(anyOp);
@@ -115,7 +116,7 @@ const interpret = p.many(anyOp);
 function run (
   bfProgram: string,
   input: string,
-  jumps = 10_000
+  jumps = 10_000,
 ): string {
   const translatedProgram = pc.match(translate, bfProgram.replace(/[^-+<>.,[\]]/g, ''), {});
   const state: State = {
@@ -123,7 +124,7 @@ function run (
     memory:  [],
     input:   [...input].map(c => c.charCodeAt(0)),
     output:  [],
-    jumps:   jumps
+    jumps:   jumps,
   };
   p.match(interpret, translatedProgram, state);
   return state.output

@@ -1,0 +1,21 @@
+{
+  "all": true,
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/charTypes/*.ts"
+  ],
+
+  "check-coverage": true,
+  "statements": 100,
+  "branches": 100,
+  "functions": 100,
+  "lines": 100,
+
+  "reporter": [
+    "lcov",
+    "text"
+  ]
+}

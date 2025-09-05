@@ -4,10 +4,10 @@
     "emphasis-style": false,
     "first-line-heading": false,
     "line-length": false,
-    "no-duplicate-header": { "allow_different_nesting": true },
+    "no-duplicate-heading": { "siblings_only": true },
     "no-inline-html": { "allowed_elements": ["details", "summary", "div"] },
     "no-multiple-blanks": { "maximum": 2 }
   },
   "globs": [ "**/*.md" ],
-  "ignores": [ "node_modules" ]
+  "gitignore": true
 }

@@ -1,21 +1,22 @@
 
 // This implementation "compiles" a Brainfuck code into a runnable function.
 
-import * as p from '../src/core';
-import * as pc from '../src/char';
+
+import * as p from '../src/core.ts';
+import * as pc from '../src/char.ts';
 
 
 // Types
 
 type Options = {
-  maxLoops: number // max number of loops before terminating the computation
-}
+  maxLoops: number; // max number of loops before terminating the computation
+};
 
 type State = {
-  pointer: number,   // points at a memory cell
-  memory:  number[], // memory tape
-  input:   number[], // input buffer for the read op
-  output:  number[], // output buffer for the write op
+  pointer: number;   // points at a memory cell
+  memory:  number[]; // memory tape
+  input:   number[]; // input buffer for the read op
+  output:  number[]; // output buffer for the write op
 };
 
 type Op = (state: State) => void; // A function that modifies state in-place.
@@ -31,10 +32,10 @@ function setValue (state: State, value: number) {
   state.memory[state.pointer] = value % 256;
 }
 
-function makeOpParser (char: string, op: Op): p.Parser<string,Options,Op> {
+function makeOpParser (char: string, op: Op): p.Parser<string, Options, Op> {
   return p.right(
     pc.char(char),
-    p.emit(op)
+    p.emit(op),
   );
 }
 
@@ -59,13 +60,13 @@ const parseAnyOp = p.choice(
   next, prev,
   inc, dec,
   write, read,
-  p.recursive(() => loop)
+  p.recursive(() => loop),
 );
 
-const loop: p.Parser<string,Options,Op> = p.middle(
+const loop: p.Parser<string, Options, Op> = p.middle(
   pc.char('['),
   p.chain(
-    p.many( parseAnyOp ),
+    p.many(parseAnyOp),
     (ops, data) => {
       const seq = makeSequence(ops);
       const maxLoops = data.options.maxLoops;
@@ -78,27 +79,27 @@ const loop: p.Parser<string,Options,Op> = p.middle(
             }
             seq(state);
           }
-        }
+        },
       );
-    }
+    },
   ),
   p.token(
-    (c) => (c === ']') ? c : undefined,
-    () => { throw new Error('Missing closing bracket!'); }
-  )
+    c => (c === ']') ? c : undefined,
+    () => { throw new Error('Missing closing bracket!'); },
+  ),
 );
 
 const unexpectedBracket = p.right(
   pc.char(']'),
-  p.error('Unexpected closing bracket!')
+  p.error('Unexpected closing bracket!'),
 );
 
 const parseAll = p.map(
-  p.many(p.otherwise(
+  p.many(p.eitherOr(
     parseAnyOp,
-    unexpectedBracket
+    unexpectedBracket,
   )),
-  makeSequence
+  makeSequence,
 );
 
 
@@ -108,14 +109,14 @@ function compile (program: string, maxLoops = 1_000) {
   const op = pc.match(
     parseAll,
     program.replace(/[^-+<>.,[\]]/g, ''),
-    { maxLoops: maxLoops }
+    { maxLoops: maxLoops },
   );
   return (input: string) => {
     const state: State = {
       pointer: 0,
       memory: [],
       input: [...input].map(c => c.charCodeAt(0)),
-      output: []
+      output: [],
     };
     op(state);
     return state.output

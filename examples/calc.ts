@@ -23,8 +23,9 @@
 // 4. prod_       left    [*/%]
 // 5. sum_        left    [+-]
 
-import { createLexer, Token } from 'leac';
-import * as p from '../src/core';
+
+import { createLexer, type Token } from 'leac';
+import * as p from '../src/core.ts';
 
 
 const multipliers: Record<string, number> = {
@@ -55,7 +56,7 @@ const multipliers: Record<string, number> = {
   Pi: 2 ** 50,
   Ei: 2 ** 60,
   Zi: 2 ** 70,
-  Yi: 2 ** 80
+  Yi: 2 ** 80,
 };
 
 
@@ -75,7 +76,7 @@ const lex = createLexer([
   {
     name: 'space',
     regex: /\s+/,
-    discard: true
+    discard: true,
   },
   { name: 'number', regex: /(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?(?![0-9])/ },
   { name: 'unitPrefix', regex: /(?:[yzafpnumcdh]|da|[kMGTPEZY]i?)\b/ },
@@ -87,23 +88,23 @@ const lex = createLexer([
 
 // Build up the calculator from smaller, simpler parts
 
-function literal (type: string): p.Parser<Token,unknown,true> {
-  return p.token((t) => t.name === type ? true : undefined);
+function literal (type: string): p.Parser<Token, unknown, true> {
+  return p.token(t => t.name === type ? true : undefined);
 }
 
-const number_: p.Parser<Token,unknown,number>
-= p.token((t) => t.name === 'number' ? parseFloat(t.text) : undefined);
+const number_: p.Parser<Token, unknown, number>
+  = p.token(t => t.name === 'number' ? parseFloat(t.text) : undefined);
 
-const unitPrefix_: p.Parser<Token,unknown,number>
-= p.token((t) => t.name === 'unitPrefix' ? multipliers[t.text] : undefined );
+const unitPrefix_: p.Parser<Token, unknown, number>
+  = p.token(t => t.name === 'unitPrefix' ? multipliers[t.text] : undefined);
 
-const scaledNumber_: p.Parser<Token,unknown,number> = p.ab(
+const scaledNumber_: p.Parser<Token, unknown, number> = p.ab(
   number_,
   p.option(unitPrefix_, 1),
-  (value, multiplier) => value * multiplier
+  (value, multiplier) => value * multiplier,
 );
 
-const constant_: p.Parser<Token,unknown,number> = p.token((t) => {
+const constant_: p.Parser<Token, unknown, number> = p.token((t) => {
   if (t.name !== 'constant') { return undefined; }
   switch (t.text) {
     case 'e':
@@ -117,38 +118,38 @@ const constant_: p.Parser<Token,unknown,number> = p.token((t) => {
   }
 });
 
-const unaryFun_: p.Parser<Token,unknown,(x: number) => number> = p.ab(
+const unaryFun_: p.Parser<Token, unknown, (x: number) => number> = p.ab(
   p.token((t) => {
     if (t.name !== 'unaryFun') { return undefined; }
     switch (t.text) {
       case 'sin':
-        return (x) => Math.sin(x);
+        return x => Math.sin(x);
       case 'cos':
-        return (x) => Math.cos(x);
+        return x => Math.cos(x);
       case 'tan':
-        return (x) => Math.tan(x);
+        return x => Math.tan(x);
       case 'asin':
-        return (x) => Math.asin(x);
+        return x => Math.asin(x);
       case 'acos':
-        return (x) => Math.acos(x);
+        return x => Math.acos(x);
       case 'atan':
-        return (x) => Math.atan(x);
+        return x => Math.atan(x);
       case 'ln':
-        return (x) => Math.log(x);
+        return x => Math.log(x);
       case 'lg':
-        return (x) => Math.log10(x);
+        return x => Math.log10(x);
       default:
         throw new Error(`Unexpected function name: "${t.text}"`);
     }
-  }) as p.Parser<Token,unknown,(x: number) => number>,
+  }) as p.Parser<Token, unknown, (x: number) => number>,
   p.option(p.right(
     literal('^'),
-    p.recursive(() => signExp_)
+    p.recursive(() => signExp_),
   ), 1),
-  (f, pow: number) => (pow === 1) ? f : (x) => f(x) ** pow
+  (f, pow: number) => (pow === 1) ? f : x => f(x) ** pow,
 );
 
-const biFun_: p.Parser<Token,unknown,(x: number, y: number) => number> = p.ab(
+const biFun_: p.Parser<Token, unknown, (x: number, y: number) => number> = p.ab(
   p.token((t) => {
     if (t.name !== 'biFun') { return undefined; }
     switch (t.text) {
@@ -157,28 +158,28 @@ const biFun_: p.Parser<Token,unknown,(x: number, y: number) => number> = p.ab(
       default:
         throw new Error(`Unexpected function name: "${t.text}"`);
     }
-  }) as p.Parser<Token,unknown,(x: number, y: number) => number>,
+  }) as p.Parser<Token, unknown, (x: number, y: number) => number>,
   p.option(p.right(
     literal('^'),
-    p.recursive(() => signExp_)
+    p.recursive(() => signExp_),
   ), 1),
-  (f, pow: number) => (pow === 1) ? f : (x, y) => f(x, y) ** pow
+  (f, pow: number) => (pow === 1) ? f : (x, y) => f(x, y) ** pow,
 );
 
-const expression_: p.Parser<Token,unknown,number> = p.recursive(
-  () => sum_
+const expression_: p.Parser<Token, unknown, number> = p.recursive(
+  () => sum_,
 );
 
 const paren_ = p.middle(
   literal('('),
   expression_,
-  literal(')')
+  literal(')'),
 );
 
 const unaryFunWithParen_ = p.ab(
   unaryFun_,
   paren_,
-  (f, x) => f(x)
+  (f, x) => f(x),
 );
 
 const biFunWithParen_ = p.abc(
@@ -186,13 +187,13 @@ const biFunWithParen_ = p.abc(
   p.middle(
     literal('('),
     expression_,
-    literal(',')
+    literal(','),
   ),
   p.left(
     expression_,
-    literal(')')
+    literal(')'),
   ),
-  (f, x, y) => f(x, y)
+  (f, x, y) => f(x, y),
 );
 
 const atom_ = p.choice(
@@ -200,12 +201,11 @@ const atom_ = p.choice(
   unaryFunWithParen_,
   biFunWithParen_,
   scaledNumber_,
-  constant_
+  constant_,
 );
 
 const factorialCache = [1, 1];
-function factorial (n: number)
-{
+function factorial (n: number) {
   if (n < 0) {
     throw new Error(`Trying to take factorial of ${n}, a negative value!`);
   }
@@ -214,7 +214,7 @@ function factorial (n: number)
   }
   if (typeof factorialCache[n] != 'undefined') { return factorialCache[n]; }
   let i = factorialCache.length;
-  let result = factorialCache[i-1];
+  let result = factorialCache[i - 1];
   for (; i <= n; i++) {
     factorialCache[i] = result = result * i;
   }
@@ -225,23 +225,23 @@ const factorial_ = p.leftAssoc1(
   atom_,
   p.map(
     literal('!'),
-    () => (x: number) => factorial(x)
-  )
+    () => (x: number) => factorial(x),
+  ),
 );
 
 const signExp_ = p.rightAssoc1(
   p.choice(
     p.map(
       literal('-'),
-      () => (y) => -y
+      () => y => -y,
     ),
     p.ab(
       factorial_,
       literal('^'),
-      (x) => (y) => x ** y
-    )
+      x => y => x ** y,
+    ),
   ),
-  factorial_
+  factorial_,
 );
 
 const prod_ = p.leftAssoc2(
@@ -258,7 +258,7 @@ const prod_ = p.leftAssoc2(
         return undefined;
     }
   }),
-  signExp_
+  signExp_,
 );
 
 const sum_ = p.leftAssoc2(
@@ -273,17 +273,17 @@ const sum_ = p.leftAssoc2(
         return undefined;
     }
   }),
-  prod_
+  prod_,
 );
 
 
 // Complete calculator
 
-function calc(expr: string): number {
+function calc (expr: string): number {
   const lexerResult = lex(expr);
   if (!lexerResult.complete) {
     console.warn(
-      `Input string was only partially tokenized, stopped at offset ${lexerResult.offset}!`
+      `Input string was only partially tokenized, stopped at offset ${lexerResult.offset}!`,
     );
   }
   return p.parse(expression_, lexerResult.tokens, undefined);

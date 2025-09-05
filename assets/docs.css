@@ -1,38 +1,42 @@
 /* CSS to customize Typedoc's default theme. */
 
 :root {
-  --dark-color-background-secondary: #1B2B34;
+  --dark-code-background: #0c1418;
+  --dark-color-background-secondary: #1b2b34;
   --dark-color-background: #132026;
   --dark-color-icon-background: var(--dark-color-background);
   --dark-color-accent: #ffffff33;
+  --dark-color-active-menu-item: #ffffff22;
   --dark-color-text: #ffffffbb;
   --dark-color-text-aside: #778692;
   --dark-color-link: #6699cc;
   --dark-color-ts: #c594c5;
+  --dark-color-ts-keyword: #c594c5;
+  --dark-color-ts-function: #6699cc;
+  --dark-color-ts-call-signature: #6699cc;
+  --dark-color-ts-call-signature: var(--color-text);
   --dark-color-ts-interface: #99c794;
+  --dark-color-ts-type-parameter: #99c794;
+  --dark-color-ts-parameter: var(--color-text);
+  --dark-color-ts-property: var(--color-text);
   --dark-color-ts-enum: #f99157;
   --dark-color-ts-class: #fac863;
-  --dark-color-ts-function: #9772ff;
+  --dark-color-ts-type-alias: #f99157;
   --dark-color-ts-namespace: #e14dff;
   --dark-color-ts-private: #cdd3de;
   --dark-color-ts-variable: #4d68ff;
-  --dark-code-background: #0c1418;
+}
 
-  --dark-color-tag: #5fb3b3;
-  --dark-color-tag-text: #132026;
+/* Signature color highlighting */
+
+span:where(.tsd-signature-type) {
+  color: var(--color-ts-class);
 }
 
 /* Extra space between overloads */
 
 .tsd-signature ~ .tsd-signature {
   margin-top: 4em;
-}
-
-/* Monospace parameter names */
-
-.tsd-parameter-list > li > h5 {
-  font-weight: normal;
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 /* Enclose whole parameter signatures rather than their type */
@@ -52,61 +56,31 @@
   margin: 1em;
 }
 
-/* Type parameters have no additional information on them */
+/* Monospace signatures and parameter names */
 
-.tsd-type-parameters-title,
-.tsd-type-parameters {
-  display: none;
+.tsd-signature,
+.tsd-parameter-list > li > span:first-child {
+  font-weight: normal;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-/* Parameter flags - rest, optional */
+/* Parameter flags - "rest", "optional" */
 
 @media (prefers-color-scheme: dark) {
   .tsd-tag {
     border-radius: 4px;
-    color: var(--dark-color-tag-text);
-    background-color: var(--dark-color-tag);
+    margin-right: 1em;
   }
 }
 
-/* Signature color highlighting */
+/* Code blocks */
 
-.tsd-signature-type {
-  color: var(--color-ts-class);
+code, pre {
+  border-radius: 4px;
 }
 
-.tsd-signature-type[data-tsd-kind] {
-  color: var(--color-ts);
-}
-
-.tsd-signature-type[data-tsd-kind="Type parameter"] {
-  color: var(--color-ts-interface);
-}
-
-/* Search */
-
-#tsd-search.has-focus {
-  background-color: var(--code-background);
-}
-
-#tsd-search > .results {
-  background-color: var(--color-background-secondary);
-}
-
-/* Unnecessary settings */
-
-.tsd-filter-visibility {
-  display: none;
-}
-
-/* Current item */
-
-.tsd-navigation.secondary li.current > a {
-  font-weight: bold;
-}
-
-.tsd-navigation.secondary li.current > a::after {
-  content: "\00a0←";
+pre {
+  border: none;
 }
 
 /* Tables */
@@ -117,22 +91,16 @@
 
 .tsd-panel table {
   width: 100%;
-  margin: 10px 0;
-  border-collapse: collapse;
 }
 
-.tsd-panel table th,
-.tsd-panel table td {
-  padding: 6px 13px;
-  border: 1px solid var(--color-accent);
+/* Unnecessary settings */
+
+.tsd-filter-visibility {
+  display: none;
 }
 
-/* Code blocks don't need extra decorations */
+/* Prevent navigation from being obscured by browser UI */
 
-code, pre {
-  border-radius: 0;
-}
-
-pre {
-  border: none;
+#tsd-nav-container {
+  margin-bottom: 3em;
 }

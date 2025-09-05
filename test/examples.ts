@@ -1,13 +1,14 @@
-import test, {ExecutionContext} from 'ava';
+import type { ExecutionContext } from 'ava';
+import test from 'ava';
 
 import { execFileSync } from 'child_process';
 
-function snapshotMacro(t: ExecutionContext, examplePath: string) {
+export default { require: ['./_force-exit.ts'] };
+
+function snapshotMacro (t: ExecutionContext, examplePath: string) {
   const stdout = execFileSync('node', [
-    '--experimental-specifier-resolution=node',
-    '--loader',
-    'ts-node/esm',
-    examplePath
+    '--import=ts-blank-space/register',
+    examplePath,
   ]);
   t.snapshot(stdout.toString(), examplePath);
 }
@@ -22,6 +23,10 @@ test('csv', snapshotMacro, './examples/csv.ts');
 
 test('hexColor', snapshotMacro, './examples/hexColor.ts');
 
-test('json', snapshotMacro, './examples/json.ts');
+test('json-lazy', snapshotMacro, './examples/json-lazy.ts');
+
+test('json-formal', snapshotMacro, './examples/json-formal.ts');
 
 test('nonDec', snapshotMacro, './examples/nonDec.ts');
+
+test('mckeeman-form', snapshotMacro, './examples/mckeeman-form.ts');
