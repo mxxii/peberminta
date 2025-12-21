@@ -14,7 +14,7 @@ import { mapOuter } from './mapOuter.ts';
  * If it consumes the input then the returned parser will be called with the new position.
  */
 export function decide<TToken, TOptions, TValue> (
-  p: Matcher<TToken, TOptions, Matcher<TToken, TOptions, TValue>>
+  p: Matcher<TToken, TOptions, Matcher<TToken, TOptions, TValue>>,
 ): Matcher<TToken, TOptions, TValue>;
 
 /**
@@ -30,7 +30,7 @@ export function decide<TToken, TOptions, TValue> (
  * If it consumes the input then the returned parser will be called with the new position.
  */
 export function decide<TToken, TOptions, TValue> (
-  p: Parser<TToken, TOptions, Parser<TToken, TOptions, TValue>>
+  p: Parser<TToken, TOptions, Parser<TToken, TOptions, TValue>>,
 ): Parser<TToken, TOptions, TValue>;
 
 export function decide<TToken, TOptions, TValue> (

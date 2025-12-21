@@ -14,7 +14,7 @@ import { ab } from './ab.ts';
  */
 export function right<TToken, TOptions, TValueA, TValueB> (
   pa: Matcher<TToken, TOptions, TValueA>,
-  pb: Matcher<TToken, TOptions, TValueB>
+  pb: Matcher<TToken, TOptions, TValueB>,
 ): Matcher<TToken, TOptions, TValueB>;
 
 /**
@@ -30,7 +30,7 @@ export function right<TToken, TOptions, TValueA, TValueB> (
  */
 export function right<TToken, TOptions, TValueA, TValueB> (
   pa: Parser<TToken, TOptions, TValueA>,
-  pb: Parser<TToken, TOptions, TValueB>
+  pb: Parser<TToken, TOptions, TValueB>,
 ): Parser<TToken, TOptions, TValueB>;
 
 export function right<TToken, TOptions, TValueA, TValueB> (

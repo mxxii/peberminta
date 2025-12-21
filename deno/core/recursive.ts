@@ -15,7 +15,7 @@ import type { Parser } from '../coreTypes/Parser.ts';
  * @returns A parser wrapped into a function.
  */
 export function recursive<TToken, TOptions, TValue> (
-  f: () => Matcher<TToken, TOptions, TValue>
+  f: () => Matcher<TToken, TOptions, TValue>,
 ): Matcher<TToken, TOptions, TValue>;
 
 /**
@@ -30,7 +30,7 @@ export function recursive<TToken, TOptions, TValue> (
  * @returns A parser wrapped into a function.
  */
 export function recursive<TToken, TOptions, TValue> (
-  f: () => Parser<TToken, TOptions, TValue>
+  f: () => Parser<TToken, TOptions, TValue>,
 ): Parser<TToken, TOptions, TValue>;
 
 export function recursive<TToken, TOptions, TValue> (

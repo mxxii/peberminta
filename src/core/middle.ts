@@ -16,7 +16,7 @@ import { abc } from './abc.ts';
 export function middle<TToken, TOptions, TValueA, TValueB, TValueC> (
   pa: Matcher<TToken, TOptions, TValueA>,
   pb: Matcher<TToken, TOptions, TValueB>,
-  pc: Matcher<TToken, TOptions, TValueC>
+  pc: Matcher<TToken, TOptions, TValueC>,
 ): Matcher<TToken, TOptions, TValueB>;
 
 /**
@@ -34,7 +34,7 @@ export function middle<TToken, TOptions, TValueA, TValueB, TValueC> (
 export function middle<TToken, TOptions, TValueA, TValueB, TValueC> (
   pa: Parser<TToken, TOptions, TValueA>,
   pb: Parser<TToken, TOptions, TValueB>,
-  pc: Parser<TToken, TOptions, TValueC>
+  pc: Parser<TToken, TOptions, TValueC>,
 ): Parser<TToken, TOptions, TValueB>;
 
 export function middle<TToken, TOptions, TValueA, TValueB, TValueC> (

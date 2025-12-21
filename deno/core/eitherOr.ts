@@ -21,7 +21,7 @@ import type { Parser } from '../coreTypes/Parser.ts';
  */
 export function eitherOr<TToken, TOptions, TValueA, TValueB> (
   pa: Parser<TToken, TOptions, TValueA>,
-  pb: Matcher<TToken, TOptions, TValueB>
+  pb: Matcher<TToken, TOptions, TValueB>,
 ): Matcher<TToken, TOptions, TValueA | TValueB>;
 
 /**
@@ -40,7 +40,7 @@ export function eitherOr<TToken, TOptions, TValueA, TValueB> (
  */
 export function eitherOr<TToken, TOptions, TValueA, TValueB> (
   pa: Parser<TToken, TOptions, TValueA>,
-  pb: Parser<TToken, TOptions, TValueB>
+  pb: Parser<TToken, TOptions, TValueB>,
 ): Parser<TToken, TOptions, TValueA | TValueB>;
 
 export function eitherOr<TToken, TOptions, TValueA, TValueB> (

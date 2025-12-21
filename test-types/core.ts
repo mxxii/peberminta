@@ -248,5 +248,5 @@ expectTypeOf(satisfy<DummyToken, DummyOptions, { value: number }>(
 )).toEqualTypeOf<Parser<DummyToken, DummyOptions, { value: number }>>();
 
 expectTypeOf(satisfy(
-  (m): m is { value: 39 } => (m as { value?: unknown }).value === 39,
-)).toEqualTypeOf<Parser<unknown, unknown, { value: 39 }>>();
+  (m: object): m is { value: 39 } => m != null && 'value' in m && m.value === 39,
+)).toEqualTypeOf<Parser<object, unknown, { value: 39 }>>();

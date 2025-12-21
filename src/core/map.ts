@@ -27,7 +27,7 @@ export function map<TToken, TOptions, TValue1, TValue2> (
    * @param i - Parser position in the tokens array (before the first parser matched).
    * @param j - Parser position in the tokens array (after the first parser matched).
    */
-  mapper: (v: TValue1, data: Data<TToken, TOptions>, i: number, j: number) => TValue2
+  mapper: (v: TValue1, data: Data<TToken, TOptions>, i: number, j: number) => TValue2,
 ): Matcher<TToken, TOptions, TValue2>;
 
 /**
@@ -48,7 +48,7 @@ export function map<TToken, TOptions, TValue1, TValue2> (
    * @param i - Parser position in the tokens array (before the first parser matched).
    * @param j - Parser position in the tokens array (after the first parser matched).
    */
-  mapper: (v: TValue1, data: Data<TToken, TOptions>, i: number, j: number) => TValue2
+  mapper: (v: TValue1, data: Data<TToken, TOptions>, i: number, j: number) => TValue2,
 ): Parser<TToken, TOptions, TValue2>;
 
 export function map<TToken, TOptions, TValue1, TValue2> (

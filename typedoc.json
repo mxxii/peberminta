@@ -9,7 +9,6 @@
   ],
   "customCss": "./assets/docs.css",
   "defaultCategory": "Parsers",
-  "disableSources": true,
   "entryPoints": [
     "src/core.ts",
     "src/char.ts"

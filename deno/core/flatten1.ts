@@ -12,7 +12,7 @@ import { map } from './map.ts';
  * @param p - A matcher.
  */
 export function flatten1<TToken, TOptions, TValue> (
-  p: Matcher<TToken, TOptions, (TValue | TValue[])[]>
+  p: Matcher<TToken, TOptions, (TValue | TValue[])[]>,
 ): Matcher<TToken, TOptions, TValue[]>;
 
 /**
@@ -24,7 +24,7 @@ export function flatten1<TToken, TOptions, TValue> (
  * @param p - A parser.
  */
 export function flatten1<TToken, TOptions, TValue> (
-  p: Parser<TToken, TOptions, (TValue | TValue[])[]>
+  p: Parser<TToken, TOptions, (TValue | TValue[])[]>,
 ): Parser<TToken, TOptions, TValue[]>;
 
 export function flatten1<TToken, TOptions, TValue> (

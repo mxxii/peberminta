@@ -32,7 +32,7 @@ export function ab<TToken, TOptions, TValueA, TValueB, TValue> (
    * @param i - Parser position in the tokens array (before both matchers matched).
    * @param j - Parser position in the tokens array (after both matchers matched).
    */
-  join: (va: TValueA, vb: TValueB, data: Data<TToken, TOptions>, i: number, j: number) => TValue
+  join: (va: TValueA, vb: TValueB, data: Data<TToken, TOptions>, i: number, j: number) => TValue,
 ): Matcher<TToken, TOptions, TValue>;
 
 /**
@@ -64,7 +64,7 @@ export function ab<TToken, TOptions, TValueA, TValueB, TValue> (
    * @param i - Parser position in the tokens array (before both parsers matched).
    * @param j - Parser position in the tokens array (after both parsers matched).
    */
-  join: (va: TValueA, vb: TValueB, data: Data<TToken, TOptions>, i: number, j: number) => TValue
+  join: (va: TValueA, vb: TValueB, data: Data<TToken, TOptions>, i: number, j: number) => TValue,
 ): Parser<TToken, TOptions, TValue>;
 
 export function ab<TToken, TOptions, TValueA, TValueB, TValue> (

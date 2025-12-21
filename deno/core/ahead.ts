@@ -10,7 +10,7 @@ import { mapOuter } from './mapOuter.ts';
  * @param p - A matcher.
  */
 export function ahead<TToken, TOptions, TValue> (
-  p: Matcher<TToken, TOptions, TValue>
+  p: Matcher<TToken, TOptions, TValue>,
 ): Matcher<TToken, TOptions, TValue>;
 
 /**
@@ -19,7 +19,7 @@ export function ahead<TToken, TOptions, TValue> (
  * @param p - A parser.
  */
 export function ahead<TToken, TOptions, TValue> (
-  p: Parser<TToken, TOptions, TValue>
+  p: Parser<TToken, TOptions, TValue>,
 ): Parser<TToken, TOptions, TValue>;
 
 export function ahead<TToken, TOptions, TValue> (

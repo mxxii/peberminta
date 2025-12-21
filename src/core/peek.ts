@@ -21,7 +21,7 @@ export function peek<TToken, TOptions, TValue> (
    * @param data - Data object (tokens and options).
    * @param i - Parser position in the tokens array (before the first parser matched).
    */
-  f: (r: Match<TValue>, data: Data<TToken, TOptions>, i: number) => void
+  f: (r: Match<TValue>, data: Data<TToken, TOptions>, i: number) => void,
 ): Matcher<TToken, TOptions, TValue>;
 
 /**
@@ -41,7 +41,7 @@ export function peek<TToken, TOptions, TValue> (
    * @param data - Data object (tokens and options).
    * @param i - Parser position in the tokens array (before the first parser matched).
    */
-  f: (r: Result<TValue>, data: Data<TToken, TOptions>, i: number) => void
+  f: (r: Result<TValue>, data: Data<TToken, TOptions>, i: number) => void,
 ): Parser<TToken, TOptions, TValue>;
 
 export function peek<TToken, TOptions, TValue> (

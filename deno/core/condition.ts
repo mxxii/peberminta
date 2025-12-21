@@ -23,7 +23,7 @@ export function condition<TToken, TOptions, TValueA, TValueB> (
   /**
    * Matcher to run when the condition is false.
    */
-  pFalse: Matcher<TToken, TOptions, TValueB>
+  pFalse: Matcher<TToken, TOptions, TValueB>,
 ): Matcher<TToken, TOptions, TValueA | TValueB>;
 
 /**
@@ -47,7 +47,7 @@ export function condition<TToken, TOptions, TValueA, TValueB> (
   /**
    * Parser to run when the condition is false.
    */
-  pFalse: Parser<TToken, TOptions, TValueB>
+  pFalse: Parser<TToken, TOptions, TValueB>,
 ): Parser<TToken, TOptions, TValueA | TValueB>;
 
 export function condition<TToken, TOptions, TValueA, TValueB> (
